@@ -2,7 +2,8 @@ import { defineConfig } from 'vite';
 import { minify } from 'html-minifier';
 
 export default defineConfig({
-    plugins: [htmlMinify()],
+    plugins: [htmlMinify()]
+    //,
     // base: "/principle-based-design/"
 });
 
