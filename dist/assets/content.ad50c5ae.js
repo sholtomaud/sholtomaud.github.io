@@ -1,0 +1,2 @@
+const s="<h1>Hello world</h1>",c=`:host{display:inline-block;color:var(--text-color)}
+`,n=document.createElement("template");n.innerHTML=`<style>${c}</style>${s}`;const o="app-content";class l extends HTMLElement{static get observedAttributes(){return["number"]}constructor(){var t;super(),this.attachShadow({mode:"open"}),(t=this.shadowRoot)==null||t.appendChild(n.content.cloneNode(!0))}attributeChangedCallback(t,e){t==="number"&&e&&(this.shadowRoot.querySelector(".number").textContent=` ${e}`)}}customElements.get(o)===void 0&&customElements.define(o,l);
