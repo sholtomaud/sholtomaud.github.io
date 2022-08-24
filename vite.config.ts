@@ -3,7 +3,7 @@ import { minify } from 'html-minifier';
 
 export default defineConfig({
     plugins: [htmlMinify()],
-    base: "/principle-based-design/"
+    // base: "/principle-based-design/"
 });
 
 const htmlComponentFile = /\.component\.html\?inline$/;

@@ -18,10 +18,11 @@ git add -A
 git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git main
+git push -f git@github.com:sholtomaud/sholtomaud.github.io.git main
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-
-git push -f git@github.com:sholtomaud/principle-based-design.git main:gh-pages
+git add dist -f
+git subtree push --prefix dist origin gh-pages
+# git push -f git@github.com:sholtomaud/principle-based-design.git main:gh-pages
 
 cd -

@@ -10,7 +10,9 @@
             document.querySelectorAll('[data-route]').forEach((routerLink) => {
                 routerLink.addEventListener('click', (event) => {
                     event.preventDefault();
-                    const path = event.target.dataset.route;
+
+                    const path = (event.target.dataset.route === '/') ? '/principle-based-design/' : event.target.dataset.route;
+                    console.log(path)
                     window.history.pushState({}, '', path);
                     route(path);
                 });
