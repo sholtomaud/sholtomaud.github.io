@@ -36,7 +36,10 @@
                         });
                         break;
                     default:
-                        document.querySelector('#router-outlet').innerHTML = 'Homepage';
+                        import('./src/home-page/home-page').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<home-page></home-page>';
+                        });
                         break;
                 }
             }
