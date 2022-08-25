@@ -1,4 +1,13 @@
 :host {
-  display: inline-block;
-  color: var(--text-color);
+    display: flex;
+    width: 100%;
+    padding: 0rem;
+    justify-content: center;
+}
+
+.page-title {
+    display: flex;
+    width: 100%;
+    padding: 0rem;
+    justify-content: center;
 }

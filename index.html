@@ -6,6 +6,34 @@
         <link rel="icon" type="image/png" href="/1982_Descartes_Principles_fig3.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Principle Based Design</title>
+        <style>
+            * {
+                font-family: Consolas, monaco, monospace;
+            }
+
+            ul {
+                list-style-type: none;
+                margin-left: 0px;
+                margin-block-start: 0em;
+                padding-inline-start: 0px;
+
+            }
+
+            nav {
+                font-size: 9px;
+            }
+
+            .reference {
+                font-family: 'Courier New', Courier, monospace;
+            }
+
+            .site-name {
+                font-size: x-small;
+                font-family: 'Times New Roman', Times, serif;
+                text-align: right;
+            }
+
+        </style>
         <script type="module">
             document.querySelectorAll('[data-route]').forEach((routerLink) => {
                 routerLink.addEventListener('click', (event) => {
@@ -53,10 +81,11 @@
     </head>
 
     <body>
+        <div class="site-name">Sholto Maud</div>
         <nav>
             <ul>
                 <li>
-                    <a href="/" data-route="/">Home</a>
+                    <a href="/" data-route="/">Index</a>
                 </li>
                 <li>
                     <a href="/one" data-route="/one">Page One</a>
@@ -66,7 +95,7 @@
                 </li>
             </ul>
         </nav>
-        <hr />
+        <!-- <hr /> -->
         <div id="router-outlet"></div>
         <div id="app"></div>
         <!-- <script type="module" src="/src/main.ts"></script> -->
