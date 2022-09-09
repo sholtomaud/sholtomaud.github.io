@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="/1982_Descartes_Principles_fig3.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Principle Based Design</title>
+        <style>
+            * {
+                font-family: 'Times New Roman', Times, serif;
+            }
+
+            ul {
+                list-style-type: none;
+                margin-left: 0px;
+                margin-block-start: 0em;
+                padding-inline-start: 0px;
+
+            }
+
+            nav {
+                font-size: 9px;
+            }
+
+            .reference {
+                font-family: 'Courier New', Courier, monospace;
+            }
+
+            .site-name {
+                font-size: x-small;
+                font-family: 'Times New Roman', Times, serif;
+                text-align: right;
+            }
+
+            .container {
+                display: flex;
+                justify-content: center;
+                font-size: 3rem;
+                list-style-type: none;
+                display: flex;
+                gap: 20px;
+            }
+
+            /* <!-- Using the custom property `--i` to calculate the animation duration. --> */
+            li {
+                animation-name: fadeLeft;
+                animation-duration: calc(var(--i) * 1s);
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-in-out;
+            }
+
+            @keyframes fadeLeft {
+                10% {
+                    transform: translateX(-200px);
+                    opacity: 0;
+                }
+
+                60% {
+                    opacity: 0;
+                    transform: translateX(200px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+        </style>
+        <script type="module">
+            document.querySelectorAll('[data-route]').forEach((routerLink) => {
+                routerLink.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const path = event.target.dataset.route;
+                    window.history.pushState({}, '', path);
+                    route(path);
+                });
+            });
+
+            window.addEventListener('popstate', (event) => {
+                event.preventDefault();
+                route(window.location.pathname);
+            });
+
+            // document.querySelectorAll('[data-route]').forEach((routerLink) => {
+            //     routerLink.addEventListener('click', (event) => {
+            //         event.preventDefault();
+
+            //         const path = event.target.dataset.route;// (event.target.dataset.route === '/') ? '/principle-based-design/' : event.target.dataset.route;
+            //         localStorage.setItem('path', JSON.stringify(event.target.dataset));
+            //         // window.location.href = '../';
+            //         console.log(`path [${path}]`)
+            //         console.log(`path [${localStorage.getItem('path')}]`)
+            //         window.history.pushState({}, '', path);
+            //         route(path);
+            //     });
+            // });
+
+            // window.addEventListener('popstate', (event) => {
+            //     event.preventDefault();
+            //     route(window.location.pathname);
+            // });
+
+            function route(page) {
+                console.log(page)
+                switch (page) {
+                    case '/wip/':
+                        import('./src/wip/wip').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<wip-page></wip-page>';
+                        });
+                        break;
+                    // case '/two':
+                    //     import('./src/page-two/page-two').then(() => {
+                    //         document.querySelector('#router-outlet').innerHTML =
+                    //             '<app-page-two></app-page-two>';
+                    //     });
+                    //     break;
+                    default:
+                        import('./src/home-page/home-page').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<home-page></home-page>';
+                        });
+                        break;
+                }
+            }
+
+            window.onload = () => {
+                route(window.location.pathname);
+            };
+        </script>
+    </head>
+
+    <body>
+        <!-- <ul class="container">
+            <li style="--i:1">S</li>
+            <li style="--i:1.3">h</li>
+            <li style="--i:1.6">o</li>
+            <li style="--i:1.9">l</li>
+            <li style="--i:2.2">t</li>
+            <li style="--i:2.5">o</li>
+            <li style="--i:2.8"></li>
+            <li style="--i:3.1">M</li>
+            <li style="--i:3.4">a</li>
+        </ul> -->
+        <div class="site-name">Sholto Maud</div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/" class="site-name" data-route="/">Home</a>
+                </li>
+                <!-- <li><a href="/wip/" data-route="/wip/"
+                        data-pdf="#1_2022.8.26_CestibiusAndIterations.pdf">#1_2022.8.26_CestibiusAndIterations.pdf</a>
+                </li>
+                <li><a href="wip/#1_2022.8.26_IterationsOnAWheel.pdf">#1_2022.8.26_IterationsOnAWheel.pdf</a></li>
+                <li><a href="wip/#1_2022.8.26_TriaxialParametrics.pdf">#1_2022.8.26_TriaxialParametrics.pdf</a></li>
+                <li><a href="wip/#1_2022.8.26_WheelToDescartes.pdf">#1_2022.8.26_WheelToDescartes.pdf</a></li>
+                <li><a href="wip/#1_2022.8.26_DescartesCircles.pdf">#1_2022.8.26_DescartesCircles.pdf</a></li>
+                <li><a href="wip/#1_2022.8.26_DescartesTorus.pdf">#1_2022.8.26_DescartesTorus.pdf</a></li>
+                <li><a href="wip/#1_2022.8.26_DescartesReticulation.pdf">#1_2022.8.26_DescartesReticulation.pdf</a></li>
+                <li><a href="wip/#1_2022.8.26_AustrianTube.pdf">#1_2022.8.26_AustrianTube.pdf</a></li>
+                <li><a
+                        href="wip/#1_2022.8.26_AustrianTubeAndArchimedes.pdf">#1_2022.8.26_AustrianTubeAndArchimedes.pdf</a>
+                </li>
+                <li><a href="wip/#1_2022.8.26_AustrianNozzle.pdf">#1_2022.8.26_AustrianNozzle.pdf</a></li>
+                <li><a
+                        href="pdf/#1_2022.8.26_AustrianTubeAndMetabolicConstant.pdf">#1_2022.8.26_AustrianTubeAndMetabolicConstant.pdf</a>
+                </li>
+                <li><a href="pdf/#1_2022.8.26_AustrianTubeBigPicture.pdf">#1_2022.8.26_AustrianTubeBigPicture.pdf</a>
+                </li>
+                <li><a href="pdf/#1_2022.8.26_MerseneToArchimedes.pdf">#1_2022.8.26_MerseneToArchimedes.pdf</a></li>
+                <li><a href="pdf/#1_2022.8.26_StandardNozzle.pdf">#1_2022.8.26_StandardNozzle.pdf</a></li> -->
+                <li>
+                    <a href="/wip" data-route="/wip">Page Two</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- <hr /> -->
+        <!-- <input type="link" id="link" value="#1_2022.8.26_CestibiusAndIterations.pdf" />
+        <input type="button" id="btn" value="Open"
+            onClick="javascript: window.open( document.getElementById('link').value);" /> -->
+        <!-- <li>
+            <a href="./#1_2022.8.26_CestibiusAndIterations.pdf">Page Two</a>
+        </li> -->
+        <div id="router-outlet"></div>
+        <div id="app"></div>
+        <!-- <script type="module" src="/src/main.ts"></script> -->
+    </body>
+
+</html>

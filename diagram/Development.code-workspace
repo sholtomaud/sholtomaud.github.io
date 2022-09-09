@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../Development"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "UNSW_Phd",
+		"git.ignoreLimitWarning": true
+	}
+}

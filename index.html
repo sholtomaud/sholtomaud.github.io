@@ -3,12 +3,11 @@
 
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/png" href="/1982_Descartes_Principles_fig3.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Principle Based Design</title>
+        <title>SPA WC Vite Setup</title>
         <style>
             * {
-                font-family: Consolas, monaco, monospace;
+                font-family: 'Times New Roman', Times, serif;
             }
 
             ul {
@@ -33,25 +32,66 @@
                 text-align: right;
             }
 
+            .container {
+                display: flex;
+                justify-content: center;
+                font-size: 3rem;
+                list-style-type: none;
+                display: flex;
+                gap: 20px;
+            }
+
+            /* <!-- Using the custom property `--i` to calculate the animation duration. --> */
+            li {
+                animation-name: fadeLeft;
+                animation-duration: calc(var(--i) * 1s);
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-in-out;
+            }
+
+            @keyframes fadeLeft {
+                10% {
+                    transform: translateX(-200px);
+                    opacity: 0;
+                }
+
+                60% {
+                    opacity: 0;
+                    transform: translateX(200px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
         </style>
         <script type="module">
-            document.querySelectorAll('[data-route]').forEach((routerLink) => {
-                routerLink.addEventListener('click', (event) => {
-                    event.preventDefault();
-
-                    const path = event.target.dataset.route;// (event.target.dataset.route === '/') ? '/principle-based-design/' : event.target.dataset.route;
-
-                    window.history.pushState({}, '', path);
-                    route(path);
+            window['routerLinkSetup'] = (queryTarget) => {
+                queryTarget.querySelectorAll('[data-route]').forEach((routerLink) => {
+                    routerLink.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const path = event.target.dataset.route;
+                        const params = event.target.dataset.routeparams;
+                        if (params) {
+                            window.history.pushState({}, '', `${path}?${params}`);
+                        } else {
+                            window.history.pushState({}, '', path);
+                        }
+                        route(path);
+                    });
                 });
-            });
+            }
+
+            routerLinkSetup(document);
 
             window.addEventListener('popstate', (event) => {
                 event.preventDefault();
                 route(window.location.pathname);
             });
 
-            function route(page) {
+            window['route'] = (page) => {
                 switch (page) {
                     case '/one':
                         import('./src/page-one/page-one').then(() => {
@@ -65,11 +105,14 @@
                                 '<app-page-two></app-page-two>';
                         });
                         break;
-                    default:
-                        import('./src/home-page/home-page').then(() => {
+                    case '/experiment-1':
+                        import('./src/experiment-1/experiment-1').then(() => {
                             document.querySelector('#router-outlet').innerHTML =
-                                '<home-page></home-page>';
+                                '<exexperiment-1></exexperiment-1>';
                         });
+                        break;
+                    default:
+                        document.querySelector('#router-outlet').innerHTML = 'Homepage';
                         break;
                 }
             }
@@ -81,24 +124,24 @@
     </head>
 
     <body>
-        <div class="site-name">Sholto Maud</div>
         <nav>
             <ul>
                 <li>
-                    <a href="/" data-route="/">Index</a>
+                    <a href="/" data-route="/">Home</a>
                 </li>
                 <li>
                     <a href="/one" data-route="/one">Page One</a>
+                </li>
+                <li>
+                    <a href="/experiment-1" data-route="/experiment-1">Experiment #1</a>
                 </li>
                 <li>
                     <a href="/two" data-route="/two">Page Two</a>
                 </li>
             </ul>
         </nav>
-        <!-- <hr /> -->
+        <hr />
         <div id="router-outlet"></div>
-        <div id="app"></div>
-        <!-- <script type="module" src="/src/main.ts"></script> -->
     </body>
 
 </html>

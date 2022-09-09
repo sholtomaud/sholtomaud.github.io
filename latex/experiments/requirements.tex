@@ -1,0 +1,256 @@
+% \documentclass[14pt]{article}
+% \documentclass{book}
+% \documentclass[12pt, a4]{article}
+\documentclass[12pt, a4]{book}
+\linespread{1.5}
+% Engine-specific settings
+% Detect pdftex/xetex/luatex, and load appropriate font packages.
+% This is inspired by the approach in the iftex package.
+% pdftex:
+\ifx\pdfmatch\undefined
+\else
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+\fi
+% xetex:
+\ifx\XeTeXinterchartoks\undefined
+\else
+    \usepackage{fontspec}
+    \defaultfontfeatures{Ligatures=TeX}
+\fi
+% luatex:
+\ifx\directlua\undefined
+\else
+    \usepackage{fontspec}
+\fi
+% End engine-specific settings
+
+\usepackage{amsmath,amssymb}
+\usepackage{fullpage}
+
+\usepackage{graphicx,wrapfig,lipsum}
+\usepackage[svgnames, dvipsnames]{xcolor}
+\usepackage{url}
+\urlstyle{same}
+
+\usepackage[makestderr]{pythontex}
+\restartpythontexsession{\thesection}
+
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\newcommand{\pytex}{Python\TeX}
+% \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\usepackage[comma,authoryear,round]{natbib}
+\usepackage{usebib}
+\bibliographystyle{apsr}
+
+
+% \usepackage{biblatex}
+% \usepackage[
+% backend=biber,
+% style=alphabetic,
+% sorting=ynt
+% ]{biblatex}
+% \addbibresource{MyLibrary.bib}
+% \usepackage{harvard}
+% \newbibfield{editor}
+% \bibinput{\jobname}
+
+% \bibliographystyle{abbrvnat}
+
+% \setcitestyle{authoryear} %Citation-related commands
+% \setcitestyle{citesep={;}, aysep={,}}
+
+
+% \usepackage[dvipsnames]{xcolor}
+
+\graphicspath{{images/}}
+%
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+%
+% insert here the call for the packages your document requires
+\usepackage{latexsym}
+\usepackage{hyperref} 
+\usepackage{mathtools}
+\usepackage{calculator}
+\usepackage{longtable}
+\usepackage{booktabs}
+
+\usepackage{siunitx}
+\usepackage{url}
+\sisetup{round-mode=places,round-precision=0}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{polar}
+\usepgflibrary{shapes.geometric}
+\usetikzlibrary{calc}
+\pgfplotsset{my style/.append style={axis x line=middle, axis y line=middle, xlabel={$x$}, ylabel={$y$}, axis equal }}
+
+% graphicx latexsym hyperref mathtools amssymb siunitx url
+
+% \smartqed  % flush right qed marks, e.g. at end of proof
+\RequirePackage{fix-cm}
+\usepackage{enumerate}
+\usepackage{manfnt}
+\usepackage{tikz-cd}
+\usetikzlibrary{automata, positioning, arrows}
+\usetikzlibrary{decorations.pathreplacing,positioning, arrows.meta}
+
+\usepackage{tabularx,ragged2e}
+\newcolumntype{C}{>{\Centering\arraybackslash\hspace{0pt}}X}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash\hspace{0pt}}X}
+
+\usepackage{color}
+\hypersetup{
+    linktoc=black, % 'all' will create links for everything in the TOC
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=black,
+    pdftitle={Sharelatex Example},
+    bookmarks=true,
+    pdfpagemode=FullScreen,
+    citecolor=black
+}
+
+\definecolor{aliceblue}{HTML}{00F9DE}
+
+\usepackage{amsfonts}
+\usepackage{bondgraphs}
+\usepackage{xfrac}
+\usepackage[normalem]{ulem}
+
+% \usepackage{slashbox}
+\usepackage{diagbox}
+
+\usepackage{multicol}
+
+\usepackage{ifthen}
+\newboolean{firstanswerofthechapter}  
+
+
+\colorlet{lightcyan}{cyan!40!white}
+
+\usepackage{chngcntr}
+\usepackage{stackengine}
+\usepackage{rotating}
+
+\usepackage{tasks}
+\newlength{\longestlabel}
+\settowidth{\longestlabel}{\bfseries viii.}
+\settasks{label=\roman*., label-format={\bfseries}, label-width=\longestlabel,
+item-indent=0pt, label-offset=2pt, column-sep={10pt}}
+
+\usepackage[lastexercise,answerdelayed]{exercise}
+\counterwithin{Exercise}{chapter}
+\counterwithin{Answer}{chapter}
+\counterwithin{Solution}{chapter}
+
+\renewcounter{Exercise}[chapter]
+\newcommand{\QuestionNB}{\bfseries\arabic{Question}.\ }
+
+\renewcommand{\ExerciseName}{Puzzle}
+\renewcommand{\ExerciseHeader}{\def\stackalignment{l}% code from https://tex.stackexchange.com/a/195118/101651
+    \stackunder[0pt]{\colorbox{cyan}{\textcolor{white}{\textbf{\LARGE\ExerciseHeaderNB\;\large\ExerciseName}}}}{\textcolor{lightcyan}{\rule{\linewidth}{2pt}}}\medskip}
+
+\newcounter{Puzzle}
+\newenvironment{Puzzle}{\begin{Exercise}[name={Puzzle},
+counter={Puzzle}]}
+{\end{Exercise}}
+
+
+\renewcommand{\AnswerName}{Exercises}
+\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}%
+    {\bigskip\noindent\textcolor{cyan}{\textbf{CHAPTER \thechapter}}\newline\newline%
+        \noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page %
+                \pageref{\AnswerRef}}}\smallskip}
+    {\noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page \pageref{\AnswerRef}}}\smallskip}}
+\renewcommand{\AnswerName}{Exercises}
+\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}%
+    {\bigskip\noindent\textcolor{cyan}{\textbf{CHAPTER \thechapter}}\newline\newline%
+        \noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page %
+                \pageref{\AnswerRef}}}\smallskip}
+    {\noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page \pageref{\AnswerRef}}}\smallskip}} 
+    
+\setlength{\QuestionIndent}{16pt}
+
+% \usepackage{caption}
+\usepackage{float} % USED TO FORCE IMAGES INLINE
+\usepackage{subcaption}
+\usepackage{geometry}
+\usepackage{pdflscape}
+% \geometry{margin=1.8in}
+% \usepackage[a4paper, total={6in, 8in}]{geometry}
+% \geometry{margin=1.3in}
+% \linespread{1.3}
+
+\geometry{margin=1.4in}
+\linespread{1.1}
+
+\pagenumbering{gobble}
+\usepackage{verbatim}
+\immediate\write18{texcount -tex -sum  \jobname.tex > \jobname.wordcount.tex}
+
+% Keywords command
+\providecommand{\keywords}[1]
+{
+  \small	
+  \textbf{\textit{Keywords---}} #1
+}
+
+% \usepackage{xcolor}     % for colour
+% \usepackage{lipsum}     % for sample text
+\usepackage{ntheorem}   % for theorem-like environments
+% \usepackage{mdframed}   % for framing
+
+\theoremstyle{break}
+\theoremheaderfont{\bfseries}
+
+\newmdtheoremenv[%
+linecolor=gray,
+leftmargin=60,%
+rightmargin=60,
+backgroundcolor=gray!40,%
+innertopmargin=10,%
+ntheorem]{puzzle}{Puzzle}[section]
+
+\newmdtheoremenv[%
+linecolor=gray,
+leftmargin=60,%
+rightmargin=60,
+backgroundcolor=gray!7,%
+innertopmargin=10,%
+ntheorem]{solution}{Solution}[section]
+
+
+
+% \newcommand{\mpp}{\textsc{\textbf{mpp}}}
+% \newcommand{\mpps}{\textsc{\textbf{mpp }}}
+\newcommand{\mpp}{MPP}
+\newcommand{\mpps}{MPP }
+\newcommand{\SE}{\textit{Stesibuque Engin}}
+\newcommand{\SEs}{\textit{Stesibuque Engin} }
+
+\newcommand{\bce}{\textsc{bce}}
+\newcommand{\bces}{\textsc{bce }}
+\newcommand{\CE}{\textsc{ce}}
+\newcommand{\CEs}{\textsc{ce }}
+\newcommand{\ImageWidth}{11cm}
+
+% Geometric scaling
+\newcommand{\dualsplit}{.35\linewidth}
+\newcommand{\dualadj}{\dualsplit/12}
+
+\newcommand{\tripplesplit}{.3\linewidth}
+\newcommand{\triadj}{\tripplesplit/12}
+
+\usepackage{textcomp}
+
+\usepackage{cleveref}
+\crefname{section}{§}{§§}
+\Crefname{section}{§}{§§}
+
+\pagenumbering{arabic}
+
