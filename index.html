@@ -20,7 +20,7 @@
             }
 
             nav {
-                font-size: 9px;
+                font-size: 15px;
             }
 
             .reference {
@@ -53,13 +53,13 @@
 
             function route(page) {
                 switch (page) {
-                    case '/one':
-                        import('./src/page-one/page-one').then(() => {
+                    case '/experiment-1':
+                        import('./src/page-three/page-three').then(() => {
                             document.querySelector('#router-outlet').innerHTML =
-                                '<app-page-one></app-page-one>';
+                                '<app-page-three></app-page-three>';
                         });
                         break;
-                    case '/two':
+                    case '/quad-axial':
                         import('./src/page-two/page-two').then(() => {
                             document.querySelector('#router-outlet').innerHTML =
                                 '<app-page-two></app-page-two>';
@@ -88,10 +88,10 @@
                     <a href="/" data-route="/">Index</a>
                 </li>
                 <li>
-                    <a href="/one" data-route="/one">Page One</a>
+                    <a href="/experiment-1" data-route="/experiment-1">Experiment #1 WIP</a>
                 </li>
                 <li>
-                    <a href="/two" data-route="/two">Page Two</a>
+                    <a href="/quad-axial" data-route="/quad-axial">Quad-axial blends WIP</a>
                 </li>
             </ul>
         </nav>
