@@ -3,12 +3,56 @@
 
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/png" href="/1982_Descartes_Principles_fig3.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Principle Based Design</title>
+
         <style>
             * {
-                font-family: Consolas, monaco, monospace;
+                font-family: 'Didot';
+                top: 0;
+                bottom: 0;
+                box-sizing: border-box;
+                /* padding: 0;
+                margin: 0; */
+            }
+
+            body {
+                margin: 0;
+                /* max-width: 56em;
+                padding: 1em 0; */
+            }
+
+
+
+            /* header,
+            nav,
+            article,
+            aside,
+            footer {
+                 background: lightgray;
+                padding: 1em;
+            }*/
+
+            /* footer,  */
+            header {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                color: rgb(254, 252, 248);
+                position: sticky;
+                justify-content: space-between;
+                background: rgb(2, 2, 2);
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                height: 55px;
+                padding: 10px;
+            }
+
+            article {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
 
             ul {
@@ -19,44 +63,51 @@
 
             }
 
+            li {
+                padding-bottom: 3px;
+            }
+
             nav {
-                font-size: 15px;
+                font-size: 14px;
             }
 
-            .reference {
-                font-family: 'Courier New', Courier, monospace;
+            .drafts {
+                padding-left: 8px;
             }
 
-            .site-name {
-                font-size: x-small;
-                font-family: 'Times New Roman', Times, serif;
-                text-align: right;
+            .title {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+            }
+
+            @media all and (max-width: 700px) {
+
+                aside,
+                article {
+                    grid-column: 1 / 4;
+                }
             }
 
         </style>
         
-      <script type="module" crossorigin src="/assets/index.1da89ebc.js"></script>
+
+      <script type="module" crossorigin src="/assets/index.c1d8675e.js"></script>
     </head>
 
     <body>
-        <div class="site-name">Sholto Maud</div>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/" data-route="/">Index</a>
-                </li>
-                <li>
-                    <a href="/experiment-1" data-route="/experiment-1">Experiment #1 WIP</a>
-                </li>
-                <li>
-                    <a href="/quad-axial" data-route="/quad-axial">Quad-axial blends WIP</a>
-                </li>
-            </ul>
-        </nav>
-        <!-- <hr /> -->
-        <div id="router-outlet"></div>
-        <div id="app"></div>
-        <!-- <script type="module" src="/src/main.ts"></script> -->
+        <header>
+            <a href="/" data-route="/" style="color:white; ">Home</a>
+            <div class="page-title">
+                <h2>Principle Based Design</h2>
+            </div>
+            <div>
+                <p>Mr Sholto Maud</p>
+            </div>
+        </header>
+        <article id="router-outlet">
+        </article>
     </body>
 
 </html>
