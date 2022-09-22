@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SPA WC Vite Setup</title>
+
+        <script type="module" src="https://unpkg.com/web-accordion/dist/web-accordion/web-accordion.esm.js"></script>
+        <script nomodule src="https://unpkg.com/web-accordion/dist/web-accordion/web-accordion.js"></script>
+        <style>
+            * {
+                font-family: Arial, Helvetica, sans-serif;
+                top: 0px;
+                bottom: 100vh;
+                box-sizing: border-box;
+                padding: 0;
+                margin: 0;
+            }
+
+            .grid-container {
+                display: grid;
+                grid-template-areas:
+                    'menu header header header header header'
+                    'menu main main main main main'
+                    'menu main main main main main';
+                gap: 10px;
+                /* padding: 10px; */
+                top: 0;
+                grid-gap: 10px;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            .grid-container>div {
+                background-color: rgba(255, 255, 255, 0.8);
+                /* text-align: center; */
+                padding: 20px 0;
+                /* font-size: 30px; */
+            }
+
+            .head {
+                grid-area: header;
+                padding: 0px;
+                /* height: 20px; */
+            }
+
+            .menu {
+                grid-area: menu;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                background-color: #f1f8fe;
+                padding: 5px;
+            }
+
+            .item3 {
+                grid-area: main;
+            }
+
+            .item4 {
+                grid-area: right;
+            }
+
+            .item5 {
+                grid-area: footer;
+            }
+
+            ul {
+                list-style-type: none;
+                margin-left: 0px;
+                margin-block-start: 0em;
+                padding-inline-start: 0px;
+
+            }
+
+            nav {
+                font-size: 14px;
+            }
+
+            .reference {
+                font-family: 'Courier New', Courier, monospace;
+            }
+
+            .drafts {
+                padding-left: 8px;
+            }
+
+            .tooltip {
+                position: relative;
+                display: inline-block;
+                border-bottom: 1px dotted black;
+            }
+
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                height: 40px;
+                background-color: rgb(244, 241, 241);
+                color: rgb(0, 0, 0);
+                text-align: left;
+                border-radius: 2px;
+                padding: 2.5px;
+                shado: #a3a5a7;
+
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+            }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
+
+            .site-name {
+                font-size: x-small;
+                font-family: 'Times New Roman', Times, serif;
+                text-align: right;
+            }
+
+            .container {
+                display: flex;
+                justify-content: center;
+                font-size: 3rem;
+                list-style-type: none;
+                display: flex;
+                gap: 20px;
+            }
+
+            /* <!-- Using the custom property `--i` to calculate the animation duration. --> */
+            li {
+                animation-name: fadeLeft;
+                animation-duration: calc(var(--i) * 1s);
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-in-out;
+            }
+
+            @keyframes fadeLeft {
+                10% {
+                    transform: translateX(-200px);
+                    opacity: 0;
+                }
+
+                60% {
+                    opacity: 0;
+                    transform: translateX(200px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+        </style>
+        <script type="module">
+            window['routerLinkSetup'] = (queryTarget) => {
+                queryTarget.querySelectorAll('[data-route]').forEach((routerLink) => {
+                    routerLink.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const path = event.target.dataset.route;
+                        const params = event.target.dataset.routeparams;
+                        if (params) {
+                            window.history.pushState({}, '', `${path}?${params}`);
+                        } else {
+                            window.history.pushState({}, '', path);
+                        }
+                        route(path);
+                    });
+                });
+            }
+
+            routerLinkSetup(document);
+
+            window.addEventListener('popstate', (event) => {
+                event.preventDefault();
+                route(window.location.pathname);
+            });
+
+            window['route'] = (page) => {
+                switch (page) {
+                    case '/one':
+                        import('./src/page-one/page-one').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<app-page-one></app-page-one>';
+                        });
+                        break;
+                    case '/two':
+                        import('./src/page-two/page-two').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<app-page-two></app-page-two>';
+                        });
+                        break;
+                    case '/experiment-1':
+                        import('./src/experiment-1/experiment-1').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<exexperiment-1></exexperiment-1>';
+                        });
+                        break;
+                    default:
+                        document.querySelector('#router-outlet').innerHTML = 'Homepage';
+                        break;
+                }
+            }
+
+            window.onload = () => {
+                route(window.location.pathname);
+            };
+        </script>
+        <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            console.log('hello', acc.length)
+            for (i = 0; i < acc.length; i++) {
+                console.log(i)
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+        </script>
+    </head>
+
+    <body>
+
+
+        <div class="grid-container">
+            <div class="head">
+                <p>Mr Sholto Maud</p>
+                <p>Works in progress</p>
+            </div>
+
+            <nav class="menu">
+                <ul>
+                    <li>
+                        <a href="/" data-route="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/one" data-route="/one">Page One</a>
+                        <ul class="drafts">
+                            <li>
+                                <a href="/" data-route="/" class="tooltip">
+                                    Hover over me
+                                    <span class="tooltiptext">Tooltip text</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="/" data-route="/" class="tooltip">
+                                    Home
+                                    <span class="tooltiptext">Tooltip text</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="/" data-route="/">Home</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="/experiment-1" data-route="/experiment-1">Experiment #1</a>
+                    </li>
+                    <li>
+                        <a href="/two" data-route="/two">Page Two</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+            <div class="item3" id="router-outlet"></div>
+
+            <div class="item4">Right</div>
+            <div class="item5">Footer</div>
+        </div>
+
+
+        <hr />
+
+    </body>
+
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SPA WC Vite Setup</title>
+
+        <style>
+            * {
+                font-family: Arial, Helvetica, sans-serif;
+                top: 0px;
+                bottom: 100vh;
+                box-sizing: border-box;
+                padding: 0;
+                margin: 0;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat (3, 1fr);
+                grid-template-rows: 30% 200px auto;
+                grid-gap: 1em;
+            }
+
+            .grid>* {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            header,
+            nav,
+            article,
+            aside,
+            footer {
+                background: lightgray;
+                padding: 1em;
+            }
+
+            header,
+            footer {
+                grid-column: 1 / 4;
+            }
+
+            article {
+                min-width: 15em;
+            }
+
+        </style>
+        <script type="module">
+            window['routerLinkSetup'] = (queryTarget) => {
+                queryTarget.querySelectorAll('[data-route]').forEach((routerLink) => {
+                    routerLink.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const path = event.target.dataset.route;
+                        const params = event.target.dataset.routeparams;
+                        if (params) {
+                            window.history.pushState({}, '', `${path}?${params}`);
+                        } else {
+                            window.history.pushState({}, '', path);
+                        }
+                        route(path);
+                    });
+                });
+            }
+
+            routerLinkSetup(document);
+
+            window.addEventListener('popstate', (event) => {
+                event.preventDefault();
+                route(window.location.pathname);
+            });
+
+            window['route'] = (page) => {
+                switch (page) {
+                    case '/one':
+                        import('./src/page-one/page-one').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<app-page-one></app-page-one>';
+                        });
+                        break;
+                    case '/two':
+                        import('./src/page-two/page-two').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<app-page-two></app-page-two>';
+                        });
+                        break;
+                    case '/experiment-1':
+                        import('./src/experiment-1/experiment-1').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<exexperiment-1></exexperiment-1>';
+                        });
+                        break;
+                    default:
+                        document.querySelector('#router-outlet').innerHTML = 'Homepage';
+                        break;
+                }
+            }
+
+            window.onload = () => {
+                route(window.location.pathname);
+            };
+        </script>
+
+    </head>
+
+    <body>
+
+        <div class="grid">
+            <header>
+                Header
+            </header>
+
+            <nav>
+                Navigation
+            </nav>
+
+            <article>
+                Article
+            </article>
+
+            <aside>
+                Right Sidebar
+            </aside>
+
+            <footer>
+                Footer
+            </footer>
+        </div>
+        <div class="grid-container">
+            <div class="head">
+                <p>Mr Sholto Maud</p>
+                <p>Works in progress</p>
+            </div>
+
+            <nav class="menu">
+                <ul>
+                    <li>
+                        <a href="/" data-route="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/one" data-route="/one">Page One</a>
+                        <ul class="drafts">
+                            <li>
+                                <a href="/" data-route="/" class="tooltip">
+                                    Hover over me
+                                    <span class="tooltiptext">Tooltip text</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="/" data-route="/" class="tooltip">
+                                    Home
+                                    <span class="tooltiptext">Tooltip text</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="/" data-route="/">Home</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="/experiment-1" data-route="/experiment-1">Experiment #1</a>
+                    </li>
+                    <li>
+                        <a href="/two" data-route="/two">Page Two</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+            <div class="item3" id="router-outlet"></div>
+
+            <div class="item4">Right</div>
+            <div class="item5">Footer</div>
+        </div>
+
+
+        <hr />
+
+    </body>
+
+</html>

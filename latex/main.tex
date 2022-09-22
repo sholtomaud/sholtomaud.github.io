@@ -1,8 +1,34 @@
+%TC:ignore
+
 % \documentclass[14pt]{article}
 % \documentclass{book}
 % \documentclass[12pt, a4]{article}
-\documentclass[12pt, a4]{book}
-\linespread{1.5}
+% \documentclass[12pt, a4]{book}
+
+% \usepackage{fancyhdr}
+% \usepackage{lastpage}
+
+\documentclass[a4paper, 12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+% \usepackage{caption}
+\usepackage{float} % USED TO FORCE IMAGES INLINE
+\usepackage{subcaption}
+\usepackage{pdflscape}
+% \geometry{margin=1.8in}
+% \usepackage[a4paper, total={6in, 8in}]{geometry}
+% \geometry{margin=1.3in}
+% \geometry{margin=1.4in}
+
+% \pagestyle{fancy}
+% \fancyhf{}
+% % \rhead{\today}
+% % \lhead{\bfseries My name}
+% \rfoot{}
+
+\linespread{1.7}
 % Engine-specific settings
 % Detect pdftex/xetex/luatex, and load appropriate font packages.
 % This is inspired by the approach in the iftex package.
@@ -72,7 +98,7 @@
 %
 % insert here the call for the packages your document requires
 \usepackage{latexsym}
-\usepackage{hyperref} 
+\usepackage{hyperref}
 \usepackage{mathtools}
 \usepackage{calculator}
 \usepackage{longtable}
@@ -128,7 +154,7 @@
 \usepackage{multicol}
 
 \usepackage{ifthen}
-\newboolean{firstanswerofthechapter}  
+\newboolean{firstanswerofthechapter}
 
 
 \colorlet{lightcyan}{cyan!40!white}
@@ -143,51 +169,40 @@
 \settasks{label=\roman*., label-format={\bfseries}, label-width=\longestlabel,
 item-indent=0pt, label-offset=2pt, column-sep={10pt}}
 
-\usepackage[lastexercise,answerdelayed]{exercise}
-\counterwithin{Exercise}{chapter}
-\counterwithin{Answer}{chapter}
-\counterwithin{Solution}{chapter}
+% \usepackage[lastexercise,answerdelayed]{exercise}
+% \counterwithin{Exercise}{chapter}
+% \counterwithin{Answer}{chapter}
+% \counterwithin{Solution}{chapter}
 
-\renewcounter{Exercise}[chapter]
-\newcommand{\QuestionNB}{\bfseries\arabic{Question}.\ }
+% \renewcounter{Exercise}[chapter]
+% \newcommand{\QuestionNB}{\bfseries\arabic{Question}.\ }
 
-\renewcommand{\ExerciseName}{Puzzle}
-\renewcommand{\ExerciseHeader}{\def\stackalignment{l}% code from https://tex.stackexchange.com/a/195118/101651
-    \stackunder[0pt]{\colorbox{cyan}{\textcolor{white}{\textbf{\LARGE\ExerciseHeaderNB\;\large\ExerciseName}}}}{\textcolor{lightcyan}{\rule{\linewidth}{2pt}}}\medskip}
+% \renewcommand{\ExerciseName}{Puzzle}
+% \renewcommand{\ExerciseHeader}{\def\stackalignment{l}% code from https://tex.stackexchange.com/a/195118/101651
+%     \stackunder[0pt]{\colorbox{cyan}{\textcolor{white}{\textbf{\LARGE\ExerciseHeaderNB\;\large\ExerciseName}}}}{\textcolor{lightcyan}{\rule{\linewidth}{2pt}}}\medskip}
 
-\newcounter{Puzzle}
-\newenvironment{Puzzle}{\begin{Exercise}[name={Puzzle},
-counter={Puzzle}]}
-{\end{Exercise}}
+% \newcounter{Puzzle}
+% \newenvironment{Puzzle}{\begin{Exercise}[name={Puzzle},
+% counter={Puzzle}]}
+% {\end{Exercise}}
 
 
-\renewcommand{\AnswerName}{Exercises}
-\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}%
-    {\bigskip\noindent\textcolor{cyan}{\textbf{CHAPTER \thechapter}}\newline\newline%
-        \noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page %
-                \pageref{\AnswerRef}}}\smallskip}
-    {\noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page \pageref{\AnswerRef}}}\smallskip}}
-\renewcommand{\AnswerName}{Exercises}
-\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}%
-    {\bigskip\noindent\textcolor{cyan}{\textbf{CHAPTER \thechapter}}\newline\newline%
-        \noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page %
-                \pageref{\AnswerRef}}}\smallskip}
-    {\noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page \pageref{\AnswerRef}}}\smallskip}} 
-    
-\setlength{\QuestionIndent}{16pt}
+% \renewcommand{\AnswerName}{Exercises}
+% \renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}%
+%     {\bigskip\noindent\textcolor{cyan}{\textbf{CHAPTER \thechapter}}\newline\newline%
+%         \noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page %
+%                 \pageref{\AnswerRef}}}\smallskip}
+%     {\noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page \pageref{\AnswerRef}}}\smallskip}}
+% \renewcommand{\AnswerName}{Exercises}
+% \renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}%
+%     {\bigskip\noindent\textcolor{cyan}{\textbf{CHAPTER \thechapter}}\newline\newline%
+%         \noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page %
+%                 \pageref{\AnswerRef}}}\smallskip}
+%     {\noindent\bfseries\emph{\textcolor{cyan}{\AnswerName\ \ExerciseHeaderNB, page \pageref{\AnswerRef}}}\smallskip}}
 
-% \usepackage{caption}
-\usepackage{float} % USED TO FORCE IMAGES INLINE
-\usepackage{subcaption}
-\usepackage{geometry}
-\usepackage{pdflscape}
-% \geometry{margin=1.8in}
-% \usepackage[a4paper, total={6in, 8in}]{geometry}
-% \geometry{margin=1.3in}
-% \linespread{1.3}
+% \setlength{\QuestionIndent}{16pt}
 
-\geometry{margin=1.4in}
-\linespread{1.1}
+
 
 \pagenumbering{gobble}
 \usepackage{verbatim}
@@ -196,7 +211,7 @@ counter={Puzzle}]}
 % Keywords command
 \providecommand{\keywords}[1]
 {
-  \small	
+  \small
   \textbf{\textit{Keywords---}} #1
 }
 
@@ -224,14 +239,12 @@ backgroundcolor=gray!7,%
 innertopmargin=10,%
 ntheorem]{solution}{Solution}[section]
 
-
-
 % \newcommand{\mpp}{\textsc{\textbf{mpp}}}
 % \newcommand{\mpps}{\textsc{\textbf{mpp }}}
 \newcommand{\mpp}{MPP}
 \newcommand{\mpps}{MPP }
-\newcommand{\SE}{\textit{Stesibuque Engin}}
-\newcommand{\SEs}{\textit{Stesibuque Engin} }
+\newcommand{\SE}{\textit{Cestibique Engine}}
+\newcommand{\SEs}{\textit{Cestibique Engine} }
 
 \newcommand{\bce}{\textsc{bce}}
 \newcommand{\bces}{\textsc{bce }}
@@ -254,3 +267,22 @@ ntheorem]{solution}{Solution}[section]
 
 \pagenumbering{arabic}
 
+% \usepackage{draftwatermark}
+
+\renewcommand{\thesection}{\arabic{section}}
+% \documentclass[12pt]{article}
+
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% \fancyhf{}
+% \fancyhead[R]{\thepage}
+
+%TC:endignore
+
+\begin{document}
+
+% \chapter*{Literature Review - Part A}
+% \chapter*{Literature Review - Part B}
+\input{litrev_a.tex}
+% \input{experiment1.tex}
+\end{document}

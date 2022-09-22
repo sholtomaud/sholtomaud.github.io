@@ -11,7 +11,7 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "build:data": "cat ./public/*.pdf  | jq  --raw-input .  | jq --slurp . > ./src/data.json",
-        "build:latex": "cd latex/experiments && buildtex main.tex --debug --date --version && mv *.pdf ../../public && cd ../../ ",
+        "build:latex": "cd latex && buildtex main.tex --debug --date --version && mv *.pdf ../../public && cd ../../ ",
         "preview": "vite preview"
     },
     "devDependencies": {
@@ -20,5 +20,8 @@
         "sass": "^1.54.5",
         "typescript": "^4.6.4",
         "vite": "^3.0.7"
+    },
+    "dependencies": {
+        "web-accordion": "^1.1.4"
     }
 }

@@ -3,12 +3,56 @@
 
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/png" href="/1982_Descartes_Principles_fig3.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Principle Based Design</title>
+
         <style>
             * {
-                font-family: 'Times New Roman', Times, serif;
+                font-family: 'Didot';
+                top: 0;
+                bottom: 0;
+                box-sizing: border-box;
+                /* padding: 0;
+                margin: 0; */
+            }
+
+            body {
+                margin: 0;
+                /* max-width: 56em;
+                padding: 1em 0; */
+            }
+
+
+
+            /* header,
+            nav,
+            article,
+            aside,
+            footer {
+                 background: lightgray;
+                padding: 1em;
+            }*/
+
+            /* footer,  */
+            header {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                color: rgb(254, 252, 248);
+                position: sticky;
+                justify-content: space-between;
+                background: rgb(2, 2, 2);
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                height: 55px;
+                padding: 10px;
+            }
+
+            article {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
 
             ul {
@@ -19,113 +63,51 @@
 
             }
 
-            nav {
-                font-size: 9px;
-            }
-
-            .reference {
-                font-family: 'Courier New', Courier, monospace;
-            }
-
-            .site-name {
-                font-size: x-small;
-                font-family: 'Times New Roman', Times, serif;
-                text-align: right;
-            }
-
-            .container {
-                display: flex;
-                justify-content: center;
-                font-size: 3rem;
-                list-style-type: none;
-                display: flex;
-                gap: 20px;
-            }
-
-            /* <!-- Using the custom property `--i` to calculate the animation duration. --> */
             li {
-                animation-name: fadeLeft;
-                animation-duration: calc(var(--i) * 1s);
-                animation-fill-mode: forwards;
-                animation-timing-function: ease-in-out;
+                padding-bottom: 3px;
             }
 
-            @keyframes fadeLeft {
-                10% {
-                    transform: translateX(-200px);
-                    opacity: 0;
-                }
+            nav {
+                font-size: 14px;
+            }
 
-                60% {
-                    opacity: 0;
-                    transform: translateX(200px);
-                }
+            .drafts {
+                padding-left: 8px;
+            }
 
-                100% {
-                    opacity: 1;
-                    transform: translateX(0);
+            .title {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+            }
+
+            @media all and (max-width: 700px) {
+
+                aside,
+                article {
+                    grid-column: 1 / 4;
                 }
             }
 
         </style>
         
-      <script type="module" crossorigin src="/assets/index.9d360098.js"></script>
+
+      <script type="module" crossorigin src="/assets/index.0536f225.js"></script>
     </head>
 
     <body>
-        <!-- <ul class="container">
-            <li style="--i:1">S</li>
-            <li style="--i:1.3">h</li>
-            <li style="--i:1.6">o</li>
-            <li style="--i:1.9">l</li>
-            <li style="--i:2.2">t</li>
-            <li style="--i:2.5">o</li>
-            <li style="--i:2.8"></li>
-            <li style="--i:3.1">M</li>
-            <li style="--i:3.4">a</li>
-        </ul> -->
-        <div class="site-name">Sholto Maud</div>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/" class="site-name" data-route="/">Home</a>
-                </li>
-                <!-- <li><a href="/wip/" data-route="/wip/"
-                        data-pdf="#1_2022.8.26_CestibiusAndIterations.pdf">#1_2022.8.26_CestibiusAndIterations.pdf</a>
-                </li>
-                <li><a href="wip/#1_2022.8.26_IterationsOnAWheel.pdf">#1_2022.8.26_IterationsOnAWheel.pdf</a></li>
-                <li><a href="wip/#1_2022.8.26_TriaxialParametrics.pdf">#1_2022.8.26_TriaxialParametrics.pdf</a></li>
-                <li><a href="wip/#1_2022.8.26_WheelToDescartes.pdf">#1_2022.8.26_WheelToDescartes.pdf</a></li>
-                <li><a href="wip/#1_2022.8.26_DescartesCircles.pdf">#1_2022.8.26_DescartesCircles.pdf</a></li>
-                <li><a href="wip/#1_2022.8.26_DescartesTorus.pdf">#1_2022.8.26_DescartesTorus.pdf</a></li>
-                <li><a href="wip/#1_2022.8.26_DescartesReticulation.pdf">#1_2022.8.26_DescartesReticulation.pdf</a></li>
-                <li><a href="wip/#1_2022.8.26_AustrianTube.pdf">#1_2022.8.26_AustrianTube.pdf</a></li>
-                <li><a
-                        href="wip/#1_2022.8.26_AustrianTubeAndArchimedes.pdf">#1_2022.8.26_AustrianTubeAndArchimedes.pdf</a>
-                </li>
-                <li><a href="wip/#1_2022.8.26_AustrianNozzle.pdf">#1_2022.8.26_AustrianNozzle.pdf</a></li>
-                <li><a
-                        href="pdf/#1_2022.8.26_AustrianTubeAndMetabolicConstant.pdf">#1_2022.8.26_AustrianTubeAndMetabolicConstant.pdf</a>
-                </li>
-                <li><a href="pdf/#1_2022.8.26_AustrianTubeBigPicture.pdf">#1_2022.8.26_AustrianTubeBigPicture.pdf</a>
-                </li>
-                <li><a href="pdf/#1_2022.8.26_MerseneToArchimedes.pdf">#1_2022.8.26_MerseneToArchimedes.pdf</a></li>
-                <li><a href="pdf/#1_2022.8.26_StandardNozzle.pdf">#1_2022.8.26_StandardNozzle.pdf</a></li> -->
-                <li>
-                    <a href="/wip" data-route="/wip">Page Two</a>
-                </li>
-            </ul>
-        </nav>
-        <!-- <hr /> -->
-        <!-- <input type="link" id="link" value="#1_2022.8.26_CestibiusAndIterations.pdf" />
-        <input type="button" id="btn" value="Open"
-            onClick="javascript: window.open( document.getElementById('link').value);" /> -->
-        <!-- <li>
-            <a href="./#1_2022.8.26_CestibiusAndIterations.pdf">Page Two</a>
-        </li> -->
-        <div id="router-outlet"></div>
-        <div id="app"></div>
-        <!-- <script type="module" src="/src/main.ts"></script> -->
+        <header>
+            <a href="/" data-route="/" style="color:white; ">Home</a>
+            <div class="page-title">
+                <h2>Principle Based Design</h2>
+            </div>
+            <div>
+                <p>Mr Sholto Maud</p>
+            </div>
+        </header>
+        <article id="router-outlet">
+        </article>
     </body>
 
 </html>

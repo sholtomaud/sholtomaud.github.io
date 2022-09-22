@@ -1,50 +1,182 @@
-<div style="">
-    <h1>Works in progress</h1>
-    <ul id="works-list">
-        <!-- <input type="link" id="link" value="public/#1_2022.8.26_CestibiusAndIterations.pdf" />
-        <input type="button" id="btn" value="Open"
-            onClick="javascript: window.open( document.getElementById('link').value);" /> -->
+<slot>
 
-        <!-- <li><a href="./wip"
-                data-route="wip/#1_2022.8.26_CestibiusAndIterations.pdf">#1_2022.8.26_CestibiusAndIterations.pdf</a>
-        </li>
-        <li><a href="wip/#1_2022.8.26_IterationsOnAWheel.pdf">#1_2022.8.26_IterationsOnAWheel.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_TriaxialParametrics.pdf">#1_2022.8.26_TriaxialParametrics.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_WheelToDescartes.pdf">#1_2022.8.26_WheelToDescartes.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_DescartesCircles.pdf">#1_2022.8.26_DescartesCircles.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_DescartesTorus.pdf">#1_2022.8.26_DescartesTorus.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_DescartesReticulation.pdf">#1_2022.8.26_DescartesReticulation.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_AustrianTube.pdf">#1_2022.8.26_AustrianTube.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_AustrianTubeAndArchimedes.pdf">#1_2022.8.26_AustrianTubeAndArchimedes.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_AustrianNozzle.pdf">#1_2022.8.26_AustrianNozzle.pdf</a></li>
-        <li><a
-                href="pdf/#1_2022.8.26_AustrianTubeAndMetabolicConstant.pdf">#1_2022.8.26_AustrianTubeAndMetabolicConstant.pdf</a>
-        </li>
-        <li><a href="pdf/#1_2022.8.26_AustrianTubeBigPicture.pdf">#1_2022.8.26_AustrianTubeBigPicture.pdf</a></li>
-        <li><a href="pdf/#1_2022.8.26_MerseneToArchimedes.pdf">#1_2022.8.26_MerseneToArchimedes.pdf</a></li>
-        <li><a href="pdf/#1_2022.8.26_StandardNozzle.pdf">#1_2022.8.26_StandardNozzle.pdf</a></li> -->
-    </ul>
-</div>
-<!-- <ul id="works-list">
-        <input type="link" id="link" value="public/#1_2022.8.26_CestibiusAndIterations.pdf" />
-        <input type="button" id="btn" value="Open"
-            onClick="javascript: window.open( document.getElementById('link').value);" />
+    <div class="left-panel">
+        <section>
+            <h2>Contents</h2>
 
-        <li><a href="wip/#1_2022.8.26_CestibiusAndIterations.pdf">#1_2022.8.26_CestibiusAndIterations.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_IterationsOnAWheel.pdf">#1_2022.8.26_IterationsOnAWheel.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_TriaxialParametrics.pdf">#1_2022.8.26_TriaxialParametrics.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_WheelToDescartes.pdf">#1_2022.8.26_WheelToDescartes.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_DescartesCircles.pdf">#1_2022.8.26_DescartesCircles.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_DescartesTorus.pdf">#1_2022.8.26_DescartesTorus.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_DescartesReticulation.pdf">#1_2022.8.26_DescartesReticulation.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_AustrianTube.pdf">#1_2022.8.26_AustrianTube.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_AustrianTubeAndArchimedes.pdf">#1_2022.8.26_AustrianTubeAndArchimedes.pdf</a></li>
-        <li><a href="wip/#1_2022.8.26_AustrianNozzle.pdf">#1_2022.8.26_AustrianNozzle.pdf</a></li>
-        <li><a
-                href="pdf/#1_2022.8.26_AustrianTubeAndMetabolicConstant.pdf">#1_2022.8.26_AustrianTubeAndMetabolicConstant.pdf</a>
-        </li>
-        <li><a href="pdf/#1_2022.8.26_AustrianTubeBigPicture.pdf">#1_2022.8.26_AustrianTubeBigPicture.pdf</a></li>
-        <li><a href="pdf/#1_2022.8.26_MerseneToArchimedes.pdf">#1_2022.8.26_MerseneToArchimedes.pdf</a></li>
-        <li><a href="pdf/#1_2022.8.26_StandardNozzle.pdf">#1_2022.8.26_StandardNozzle.pdf</a></li>
-    </ul>
-     -->
+            <ul>
+                <li>
+                    Preface (to appear)
+                    <!-- <a href="/preface" data-route="/preface"></a> -->
+                </li>
+                <li>
+                    Introduction (to appear)
+                    <!-- <a href="/preface" data-route="/preface"></a> -->
+                </li>
+                <li>
+                    Methodology (to appear)
+                    <!-- <a href="/preface" data-route="/preface"></a> -->
+                </li>
+                <ul class="drafts">
+                    Literature Review
+                    <li>
+                        <a href="/display-pdf" data-route="/display-pdf"
+                            data-routeparams="pdf=Maud-2022-Literature Review Part A-Draft-v1.2.pdf">Part A Contemporary
+                            Context</a>
+                    </li>
+                    <!-- <li>
+                        <a href="/display-pdf" data-route="/display-pdf"
+                            data-routeparams="pdf=Maud-2022-Experiment1-Draft-v1.1.pdf">B. Heritage of PBD</a>
+                    </li> -->
+                </ul>
+                <!-- <li>
+                    <a href="/two" data-route="/two">Experiment Two</a>
+                </li> -->
+            </ul>
+        </section>
+    </div>
+    <div class="main">
+        <div class="text">
+
+            <h2>Welcome</h2>
+            <section>
+                The current project is concerned to provide a definition and method for testing what is identified here
+                as
+                Principle Based Design (PBD). As a part of the research a narrative will be developed to show the
+                historical lineage
+                of PBD with reference to the history of
+                waterwheel
+                design and the concept of &#8220;Principle&#8221; developed in the General Systems Theories of
+                Ren&eacute; Descartes (1596-1650) and Howard T. Odum (1924-2002).
+            </section>
+
+            <section>
+                The aim here is to identify how these thinkers defined the concept of a &#8220;Principle&#8221; and how
+                it was relevant to the transformation of design practice in the early modern and modern periods. In
+                doing so the
+                project will then aim to specify a series of Experiments that might be conducted with the aid of a 3D
+                printer to verify that the concept of Principle Based Design has merid.
+            </section>
+
+            <section>
+                Through these experiments the intention will be to see whether we can answer the following questions:
+                What is a Principle? What is PBD? How can we demonstrate PBD? Is there a method for PBD? Inasmuch the
+                research falls under a part of practice based design known as Experimental Design Philosophy.
+            </section>
+
+            <!-- <section>
+
+                The narrative starts with a specific type of Ancient Greek waterwheel
+                known as the &nbsp<i>Ctesibuque Engin</i>&nbsp; (Fig.1), named after the Ancient Greak inventor &nbsp;<a
+                    href="https://en.wikipedia.org/wiki/Ctesibius">Ctesibius</a>. It
+                is argued that PBD can be seen to
+                emerge through
+                a transformation in the
+                analysis of
+                &nbsp<i>Ctesibuque Engin</i>&nbsp; design during the early modern period (circa 1550-1750), especially
+                facilitated by Ren&eacute;
+                Descartes&rsquo; metaphysics of ideal fluid flow in a Torus (Fig.2).
+            </section>
+
+            <section>
+
+                It is contended that a significant change in design analysis was
+                facilitated by Ren&eacute;
+                Descartes&rsquo; metaphysics of ideal fluid flow in a Torus (Fig.2). Descartes&rsquo;
+                analysis of ideal
+                fluid flow generated a concept of &#8220;Principle&#8221; that enabled the subsequent development of the
+                hydrologic theorem also
+                known as
+                the &nbsp<i>Principle of Continuity</i>.
+            </section>
+
+            Descartes&rsquo; concept of Principle is used as a context to revisit the Experimental Philosophy of
+            Smeaton, who referred to the use of Principles in the design of waterwheels (Fig.3). It is contended that
+            Smeaton&rsquo;s experiments and reports provide early textual evidence of PBD in the literature.<br><br>
+
+            Smeaton reported his results in such a way that they were not only amaneable to Descartes&rsquo; General
+            Systems metaphysics, but matched the subsequent General Systems paradigm which claims there is a Principle
+            of Power Maximisation (Fig.4) that determines, or &#8220;selects&#8221;, the evolutionary
+            sustainability of system designs. This is the so-called &#8220;Maximum
+            Power Principle&#8221;.
+            <br><br>
+
+
+            Moreover, it seems to have enabled Smeaton to the
+            scale model experiments of verification.
+
+            is then identified as significant to the development of
+            hydrologic engineering.
+
+            promoted by the Florida School of Systems Ecology and called the &#8220;Maximum
+            Power Principle&#8221;. It investigates with reference to the philosophy of
+            Ren&eacute;
+            Descartes&rsquo; and his concept of Principle and . The idea here will be to use
+            the &nbsp<i>Ctesibuque Engin</i>&nbsp; as a design
+            case.<br><br>
+
+            The aim is to create a series of tests to verify which designs of a
+            &nbsp<i>Ctesibuque Engin</i>&nbsp; (Fig.1) behave according to the plot of the &#8220;Maximum
+            Power Principle&#8221; depicted in Figure 2.<br><br>
+
+             <br><br> -->
+        </div>
+
+
+
+        <div class="right-panel">
+            <figure class="image-section">
+                <img src="Vitruvius_1511_p101.jpg" width="140px">
+                <figcaption>
+                    Fig.1 The &nbsp;<i>Ctesibuque Engin</i>&nbsp; as depicted in &nbsp;<i>De architectura.</i>&nbsp;
+                    (Vitrivius 1511, p.101)
+                </figcaption>
+            </figure>
+            <figure class="image-section">
+                <img src="fugmann_water_1938.jpeg" width="140px">
+                <figcaption>
+                    Fig.2 Fugmann's watercolour of Syrian Noria wheel
+                </figcaption>
+            </figure>
+            <figure class="image-section">
+                <img src="1982_Descartes_Circle_fig3.jpg" width="140px">
+                <figcaption>
+                    Fig.3 Descartes&rsquo; concept of Principle
+                    (Descartes 1982, fig.3)
+                </figcaption>
+            </figure>
+            <figure class="image-section">
+                <img src="1759p101.jpg" width="140px">
+                <figcaption>
+                    Fig.4 Experimental Philosophy of Water Wheels (Smeaton 1750, p.101)
+                </figcaption>
+            </figure>
+
+            <figure class="image-section">
+                <img src="2014_Costanza_maxpower_p70.jpg" width="140px">
+                <figcaption>
+                    Fig.5 A depiction of the &#8220;Maximum Power Principle&#8221; (Costanza et al. 2014, p.70)
+                </figcaption>
+            </figure>
+
+
+        </div>
+    </div>
+    <!-- <section class="references">
+        <h2>References:</h2>
+        <ul>
+            <li id="Vitruvius_1511_p101">
+                Vitruvius, M., 1511. &nbsp;<i>De architectura.</i>&nbsp; Tours, Cesr, SR/8B (2994), Venice, G. da
+                Tridentino.
+            </li>
+            <li id="2014_Costanza_maxpower_p70">
+                Costanza, R., Cumberland, J.H., Daly, H., Goodland, R., Norgaard, R.B., Kubiszewski, I., Franco, C.,
+                2014. An &nbsp;<i>Introduction to Ecological Economics</i>, Second Edition. CRC Press.
+                <a
+                    href="http://architectura.cesr.univ-tours.fr/Traite/Images/CESR_2994Index.asp">http://architectura.cesr.univ-tours.fr/Traite/Images/CESR_2994Index.asp</a>.
+                Accessed 2019-11-15 12:01:51.
+            </li>
+        </ul>
+    </section> -->
+
+</slot>

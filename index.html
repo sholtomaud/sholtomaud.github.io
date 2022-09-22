@@ -4,10 +4,55 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>SPA WC Vite Setup</title>
+        <title>Principle Based Design</title>
+
         <style>
             * {
-                font-family: 'Times New Roman', Times, serif;
+                font-family: 'Didot';
+                top: 0;
+                bottom: 0;
+                box-sizing: border-box;
+                /* padding: 0;
+                margin: 0; */
+            }
+
+            body {
+                margin: 0;
+                /* max-width: 56em;
+                padding: 1em 0; */
+            }
+
+
+
+            /* header,
+            nav,
+            article,
+            aside,
+            footer {
+                 background: lightgray;
+                padding: 1em;
+            }*/
+
+            /* footer,  */
+            header {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                color: rgb(254, 252, 248);
+                position: sticky;
+                justify-content: space-between;
+                background: rgb(2, 2, 2);
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                height: 55px;
+                padding: 10px;
+            }
+
+            article {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
 
             ul {
@@ -18,51 +63,30 @@
 
             }
 
-            nav {
-                font-size: 9px;
-            }
-
-            .reference {
-                font-family: 'Courier New', Courier, monospace;
-            }
-
-            .site-name {
-                font-size: x-small;
-                font-family: 'Times New Roman', Times, serif;
-                text-align: right;
-            }
-
-            .container {
-                display: flex;
-                justify-content: center;
-                font-size: 3rem;
-                list-style-type: none;
-                display: flex;
-                gap: 20px;
-            }
-
-            /* <!-- Using the custom property `--i` to calculate the animation duration. --> */
             li {
-                animation-name: fadeLeft;
-                animation-duration: calc(var(--i) * 1s);
-                animation-fill-mode: forwards;
-                animation-timing-function: ease-in-out;
+                padding-bottom: 3px;
             }
 
-            @keyframes fadeLeft {
-                10% {
-                    transform: translateX(-200px);
-                    opacity: 0;
-                }
+            nav {
+                font-size: 14px;
+            }
 
-                60% {
-                    opacity: 0;
-                    transform: translateX(200px);
-                }
+            .drafts {
+                padding-left: 8px;
+            }
 
-                100% {
-                    opacity: 1;
-                    transform: translateX(0);
+            .title {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+            }
+
+            @media all and (max-width: 700px) {
+
+                aside,
+                article {
+                    grid-column: 1 / 4;
                 }
             }
 
@@ -93,6 +117,12 @@
 
             window['route'] = (page) => {
                 switch (page) {
+                    case '/':
+                        import('./src/home-page/home-page').then(() => {
+                            document.querySelector('#router-outlet').innerHTML =
+                                '<home-page></home-page>';
+                        });
+                        break;
                     case '/one':
                         import('./src/page-one/page-one').then(() => {
                             document.querySelector('#router-outlet').innerHTML =
@@ -105,15 +135,15 @@
                                 '<app-page-two></app-page-two>';
                         });
                         break;
-                    case '/experiment-1':
-                        import('./src/experiment-1/experiment-1').then(() => {
+                    case '/display-pdf':
+                        import('./src/display-pdf/display-pdf').then(() => {
                             document.querySelector('#router-outlet').innerHTML =
-                                '<exexperiment-1></exexperiment-1>';
+                                '<display-pdf></display-pdf>';
                         });
                         break;
                     default:
-                        document.querySelector('#router-outlet').innerHTML = 'Homepage';
-                        break;
+                        document.querySelector('#router-outlet').innerHTML = `<h1 style="margin-top:80px;">404 - The URL you entered does not exist</h1>`;
+
                 }
             }
 
@@ -121,27 +151,21 @@
                 route(window.location.pathname);
             };
         </script>
+
     </head>
 
     <body>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/" data-route="/">Home</a>
-                </li>
-                <li>
-                    <a href="/one" data-route="/one">Page One</a>
-                </li>
-                <li>
-                    <a href="/experiment-1" data-route="/experiment-1">Experiment #1</a>
-                </li>
-                <li>
-                    <a href="/two" data-route="/two">Page Two</a>
-                </li>
-            </ul>
-        </nav>
-        <hr />
-        <div id="router-outlet"></div>
+        <header>
+            <a href="/" data-route="/" style="color:white; ">Home</a>
+            <div class="page-title">
+                <h2>Principle Based Design</h2>
+            </div>
+            <div>
+                <p>Mr Sholto Maud</p>
+            </div>
+        </header>
+        <article id="router-outlet">
+        </article>
     </body>
 
 </html>
