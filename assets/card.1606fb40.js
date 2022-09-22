@@ -1,0 +1,2 @@
+const o="<slot></slot>",n=`:host{display:inline-block;border:1px solid cornflowerblue;border-radius:1rem;padding:1rem}
+`,t=document.createElement("template");t.innerHTML=`<style>${n}</style>${o}`;const e="app-card";class s extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"}),this.shadowRoot.appendChild(t.content.cloneNode(!0))}}customElements.get(e)===void 0&&customElements.define(e,s);
