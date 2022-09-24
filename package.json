@@ -11,7 +11,7 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "build:data": "cat ./public/*.pdf  | jq  --raw-input .  | jq --slurp . > ./src/data.json",
-        "build:latex": "cd latex && buildtex main.tex --debug --date --version && mv *.pdf ../../public && cd ../../ ",
+        "build:latex": "cd latex && buildtex main.tex --debug --fulldate --version && mv *.pdf ../../public && cd ../../ ",
         "preview": "vite preview",
         "deploy": "gh-pages -d dist"
     },

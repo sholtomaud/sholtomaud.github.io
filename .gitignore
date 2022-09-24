@@ -25,5 +25,5 @@ dist-ssr
 
 # Temporary files
 temp
-dist
+# dist
 latex
