@@ -1,0 +1,20 @@
+<site-header></site-header>
+
+<main class="page">
+  <h1 class="page__title">About</h1>
+
+  <!-- ── EDIT: this list is generated from content/perspectives/*.md by
+       scripts/generate-content.ts — drop a new <slug>.md file there (with
+       an author/date/kind frontmatter) to add an entry here automatically,
+       no HTML edit needed. This div is just the mount point. ── -->
+  <section class="perspectives">
+    <h2 class="perspectives__title">Perspectives</h2>
+    <p class="perspectives__intro">Who is Sholto Maud, according to:</p>
+    <div id="perspectives-groups"></div>
+  </section>
+
+  <!-- ── EDIT: bio text lives in content/about/bio.md, parsed at build
+       time by scripts/generate-content.ts into src/generated/about.json.
+       This div is just the mount point about-page.ts renders into. ── -->
+  <div id="about-intro" class="about-bio"></div>
+</main>

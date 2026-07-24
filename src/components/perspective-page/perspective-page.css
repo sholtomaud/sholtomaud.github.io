@@ -1,0 +1,56 @@
+:host {
+  display: block;
+}
+
+.perspective {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 3.5rem) clamp(1.25rem, 5vw, 2rem)
+    clamp(3rem, 8vw, 5rem);
+}
+
+.perspective__back {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.perspective__back:hover,
+.perspective__back:focus-visible {
+  color: var(--link-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.perspective__title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 5.5vw, 2.4rem);
+  letter-spacing: -0.01em;
+  color: #eef0f4;
+  margin: 0 0 0.5rem;
+}
+
+.perspective__meta {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 0 0 2rem;
+}
+
+.perspective__paragraph {
+  font-family: var(--display);
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 0 0 1.1rem;
+}
+
+.perspective__missing {
+  color: var(--faint);
+}

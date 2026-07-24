@@ -1,0 +1,30 @@
+{
+  "name": "sholtomaud.github.io",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/main.ts",
+  "engines": {
+    "node": ">=25.0.0"
+  },
+  "scripts": {
+    "content:generate": "node scripts/generate-content.ts",
+    "prestart": "npm run content:generate",
+    "predev": "npm run content:generate",
+    "prebuild": "npm run content:generate",
+    "pretypecheck": "npm run content:generate",
+    "start": "vite --host",
+    "dev": "vite --host",
+    "build": "vite build --base ./",
+    "test": "node --test src/**/*.test.ts scripts/**/*.test.ts",
+    "e2e": "npx playwright test",
+    "typecheck": "tsgo --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1",
+    "@typescript/native-preview": "^7.0.0-dev.20260707.2",
+    "playwright": "^1.61.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.4"
+  }
+}

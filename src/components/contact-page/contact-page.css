@@ -1,0 +1,63 @@
+:host {
+  display: block;
+}
+
+.page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 3.5rem) clamp(1.25rem, 5vw, 2rem)
+    clamp(3rem, 8vw, 5rem);
+}
+
+.page__title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  letter-spacing: -0.01em;
+  color: #eef0f4;
+  margin: 0 0 0.75rem;
+}
+
+.page__intro {
+  font-family: var(--display);
+  color: var(--muted);
+  max-width: 34rem;
+  margin: 0 0 1.75rem;
+  line-height: 1.6;
+}
+
+.page__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.page__links a {
+  display: inline-flex;
+  align-items: center;
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.page__link-icon {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.55em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.page__links a:hover,
+.page__links a:focus-visible {
+  color: var(--link-hover);
+  border-color: var(--link-hover);
+}

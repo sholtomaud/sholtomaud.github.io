@@ -1,0 +1,207 @@
+:host {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  /* safe-area insets keep it clear of notches / home indicators */
+  padding:
+    calc(clamp(1.5rem, 5vw, 4rem) + env(safe-area-inset-top))
+    calc(clamp(1.25rem, 5vw, 4rem) + env(safe-area-inset-right))
+    calc(clamp(1.5rem, 5vw, 4rem) + env(safe-area-inset-bottom))
+    calc(clamp(1.25rem, 5vw, 4rem) + env(safe-area-inset-left));
+}
+
+.card {
+  width: min(34rem, 100%);
+  text-align: center;
+}
+
+/* ── monogram ───────────────────────────────────────────────── */
+.mark {
+  width: clamp(22px, 5vw, 26px);
+  height: clamp(22px, 5vw, 26px);
+  margin: 0 auto clamp(1.75rem, 6vw, 3rem);
+  display: block;
+  opacity: 0;
+  animation: rise 0.9s 0.05s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+/* ── name: the signature, lit like moonlight on dark stock ──── */
+.name {
+  position: relative;
+  font-family: var(--display);
+  font-weight: 400;
+  /* min 2.4rem keeps a long name on one line at 320px */
+  font-size: clamp(2.4rem, 10.5vw, 4.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  color: #eef0f4;
+  margin: 0;
+  opacity: 0;
+  animation: rise 1s 0.12s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.name::before {
+  content: '';
+  position: absolute;
+  inset: -40% -10%;
+  z-index: -1;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(160, 178, 208, 0.18) 0%,
+    rgba(160, 178, 208, 0) 70%
+  );
+  opacity: 0;
+  animation: glow 1.6s 0.3s ease forwards;
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .name {
+    background: var(--sheen);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.rule {
+  width: 3rem;
+  height: 1px;
+  margin: clamp(1.4rem, 4vw, 1.9rem) auto clamp(1.25rem, 4vw, 1.75rem);
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.7;
+  transform: scaleX(0);
+  animation: draw 0.8s 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+/* ── nav: sits where the job title used to, and does its job ── */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* row-gap < column-gap so a wrapped second line still reads as one group */
+  gap: 0.25rem clamp(0.5rem, 3vw, 1.5rem);
+  opacity: 0;
+  animation: rise 0.9s 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.nav__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  /* 44px min touch target on every form factor */
+  min-height: 44px;
+  padding: 0 0.5rem;
+  font-size: clamp(0.68rem, 2.6vw, 0.74rem);
+  letter-spacing: 0.28em;
+  /* trailing letter-space would visually off-centre the label */
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+/* the underline draws out from the centre on hover */
+.nav__item::after {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 11px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.nav__item:hover,
+.nav__item:focus-visible {
+  color: var(--text);
+  outline: none;
+}
+.nav__item:hover::after,
+.nav__item:focus-visible::after {
+  transform: scaleX(1);
+}
+.nav__item:focus-visible {
+  box-shadow: 0 0 0 1px var(--line);
+  border-radius: 3px;
+}
+
+/* park a section that has no page behind it yet: still visible for
+   look-and-feel, clearly not live, keyboard- and pointer-inert */
+.nav__item--soon {
+  color: var(--faint);
+  opacity: 0.55;
+  pointer-events: none;
+  cursor: default;
+}
+.nav__item--soon::after {
+  display: none;
+}
+
+footer {
+  margin-top: clamp(2.5rem, 8vw, 3.5rem);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  animation: rise 1s 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+/* ── motion ─────────────────────────────────────────────────── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes glow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark,
+  .name,
+  .name::before,
+  .rule,
+  .nav,
+  footer {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .rule {
+    transform: scaleX(1);
+  }
+  .nav__item,
+  .nav__item::after {
+    transition: none;
+  }
+}
+
+/* landscape phones: vertical room is the scarce axis, so compress it */
+@media (max-height: 460px) and (orientation: landscape) {
+  .mark {
+    margin-bottom: 1rem;
+  }
+  .rule {
+    margin: 1rem auto;
+  }
+  footer {
+    margin-top: 1.5rem;
+  }
+}

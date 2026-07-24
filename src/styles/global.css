@@ -1,0 +1,40 @@
+@import "./variables.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  background: var(--bg);
+  background-image: radial-gradient(
+    120% 80% at 50% -10%,
+    var(--bg-glow) 0%,
+    var(--bg) 46%
+  );
+  color: var(--text);
+  font-family: var(--mono);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#router-outlet {
+  display: block;
+  min-height: 100dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

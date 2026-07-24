@@ -1,0 +1,36 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.61.1-noble
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js v25
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Typecheck (tsgo)
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Unit Tests
+        run: npm test
+
+      - name: E2E Tests
+        run: npx playwright test

@@ -1,0 +1,76 @@
+:host {
+  display: block;
+}
+
+.page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 3.5rem) clamp(1.25rem, 5vw, 2rem)
+    clamp(3rem, 8vw, 5rem);
+}
+
+.page__title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  letter-spacing: -0.01em;
+  color: #eef0f4;
+  margin: 0 0 0.75rem;
+}
+
+.page__intro {
+  font-family: var(--display);
+  color: var(--muted);
+  max-width: 34rem;
+  margin: 0 0 2.5rem;
+  line-height: 1.6;
+}
+
+.works__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.work-item {
+  display: block;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.work-item__title {
+  display: block;
+  font-size: 1.05rem;
+  font-family: var(--display-small);
+  color: var(--text);
+}
+
+.work-item__summary {
+  font-family: var(--display-small);
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.work-item__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin-top: 0.65rem;
+}
+
+.work-item__link {
+  font-size: 0.82rem;
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.work-item__link:hover,
+.work-item__link:focus-visible {
+  color: var(--link-hover);
+  border-color: var(--link-hover);
+}

@@ -1,0 +1,24 @@
+:root {
+  --bg: #0a0c11;
+  --bg-glow: #14171f;
+  --text: #eceae3;
+  --muted: #e3eaf6;
+  --faint: #5c6270;
+  --accent: #c9d2e0;
+  --line: rgba(210, 218, 232, 0.14);
+  --link: #b2d0ff;
+  --link-hover: #8fbaf5;
+
+  --sheen: linear-gradient(
+    96deg,
+    #f6f7f9 0%,
+    #d6dbe3 46%,
+    #eef0f4 74%,
+    #dfe3ea 100%
+  );
+
+  --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --display-small: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Cascadia Code', Menlo,
+    Consolas, monospace;
+}

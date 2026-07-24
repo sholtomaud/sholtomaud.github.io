@@ -1,0 +1,527 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{babel}
+\usepackage{slantsc}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage{calculator}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+\usepackage{fullpage}
+% \pagestyle{empty}
+\usepackage{setspace}
+\setlength{\parskip}{.3em} % Adjust the \parskip length to increase the gap between paragraphs
+\usepackage{graphicx,wrapfig,lipsum}
+\usepackage[svgnames, dvipsnames]{xcolor}
+
+\usepackage{array}
+\usepackage{amsmath}
+
+
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xstring}
+\usepackage{geometry}
+\usepackage{caption}\captionsetup[figure]{font=footnotesize} % Set font size of figure captions
+
+% NATBIB
+\usepackage{adjustbox}
+\usepackage{url}
+\urlstyle{hyphens} 
+\usepackage[comma,authoryear,round]{natbib}
+\usepackage{usebib}
+\usepackage{chapterbib}
+\bibliographystyle{apsr}
+% unsrtnat
+%\urlstyle{same}
+
+% \sisetup{round-mode=places,round-precision=0}
+
+% \usepackage[hyphens]{url}
+\usepackage[T1]{fontenc}
+
+% \usepackage{biblatex}
+% \addbibresource{MyLibrary.bib}
+% \usepackage[style=authoryear,sorting=nty]{biblatex}
+
+\usepackage{float} % USED TO FORCE IMAGES INLINE
+\usepackage{subcaption}
+\usepackage{pdflscape}
+
+
+
+\usepackage{fontspec}
+\setmainfont{Lato-Light.ttf}[
+BoldFont = Lato-Regular.ttf,
+ItalicFont = Lato-Light.ttf,
+% ItalicFont = CourierPrime-Italic.ttf,
+BoldItalicFont = Lato-Regular.ttf,
+ItalicFeatures={FakeSlant=0.2} % Adjust the value as needed
+]
+
+\usepackage{enumerate}
+\usepackage{manfnt}
+
+\usepackage{tikz-cd}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usetikzlibrary{trees}
+\usetikzlibrary{automata}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{arrows.meta}
+
+% \usepackage{catchfile}
+% \CatchFileDef{\headfull}{.git/HEAD.}{}
+% \StrGobbleRight{\headfull}{1}[\head]
+% \StrBehind[2]{\head}{/}[\branch]
+% \IfFileExists{.git/refs/heads/\branch.}{%
+%     \CatchFileDef{\commit}{.git/refs/heads/\branch.}{}}{%
+%     \newcommand{\commit}{\dots~(in \emph{packed-refs})}}
+
+
+
+
+
+\linespread{1.3}
+
+
+\usepackage{bondgraphs}
+\usepackage{xfrac}
+\usepackage[normalem]{ulem}
+\usepackage{diagbox}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\newcommand*\rot{\rotatebox{90}}
+\newcommand*\OK{\ding{51}}
+
+\graphicspath{{/Users/sholtomaud/Pictures/phd_images/small}}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{polar}
+\usepgflibrary{shapes.geometric}
+\pgfplotsset{my style/.append style={axis x line=middle, axis y line=middle, xlabel={$x$}, ylabel={$y$}, axis equal }}
+\pgfplotsset{compat=1.18}
+
+% graphicx latexsym hyperref mathtools amssymb siunitx url
+
+% \smartqed  % flush right qed marks, e.g. at end of proof
+\RequirePackage{fix-cm}
+
+
+
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\newcolumntype{C}{>{\Centering\arraybackslash\hspace{0pt}}X}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash\hspace{0pt}}X}
+
+% \raggedright
+\sloppy
+
+\usepackage{color}
+
+
+\definecolor{aliceblue}{HTML}{00F9DE}
+
+
+\usepackage{verbatim}
+\immediate\write18{texcount -tex -sum  \jobname.tex > \jobname.wordcount.tex}
+
+% Keywords command
+\providecommand{\keywords}[1]
+{
+  \small
+  \textbf{\textit{Keywords---}} #1
+}
+
+% \usepackage{xcolor}     % for colour
+
+% \usepackage{ntheorem}   % for theorem-like environments
+% \usepackage{mdframed}   % for framing
+
+% \theoremstyle{break}
+% \theoremheaderfont{\bfseries}
+
+\newmdtheoremenv[%
+linecolor=gray,
+leftmargin=60,%
+rightmargin=60,
+backgroundcolor=gray!40,%
+innertopmargin=10,%
+ntheorem]{puzzle}{Puzzle}[section]
+
+\newmdtheoremenv[%
+linecolor=gray,
+leftmargin=60,%
+rightmargin=60,
+backgroundcolor=gray!7,%
+innertopmargin=10,%
+ntheorem]{solution}{Solution}[section]
+
+% \newcommand{\mpp}{\textsc{\textbf{mpp}}}
+% \newcommand{\mpps}{\textsc{\textbf{mpp }}}
+\newcommand{\mpp}{MPP}
+\newcommand{\mpps}{MPP }
+\newcommand{\hto}{H.T. Odum}
+\newcommand{\hts}{H.T. Odum }
+\newcommand{\htss}{H.T. Odum's }
+\newcommand{\SE}{\textit{Cestibique Engine}}
+\newcommand{\SEs}{\textit{Cestibique Engine} }
+\newcommand{\emergy}{\textsc{emergy} }
+\newcommand{\emergys}{\textsc{emergy } }
+
+\newcommand{\bce}{\textsc{bce}}
+\newcommand{\bces}{\textsc{bce }}
+\newcommand{\CE}{\textsc{ce}}
+\newcommand{\CEs}{\textsc{ce }}
+\newcommand{\ImageWidth}{11cm}
+
+% Geometric scaling
+\newcommand{\dualsplit}{.35\linewidth}
+\newcommand{\dualadj}{\dualsplit/12}
+
+\newcommand{\tripplesplit}{.3\linewidth}
+\newcommand{\triadj}{\tripplesplit/12}
+
+\usepackage{textcomp}
+
+
+\renewcommand{\thesection}{\arabic{section}}
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+\usepackage{hyperref}
+\hypersetup{
+    linktoc=all, % `all' will create links for everything in the TOC
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Sharelatex Example},
+    pdfpagemode=FullScreen,
+    citecolor=black
+}
+\usepackage{cleveref}
+\crefname{section}{§}{§§}
+\Crefname{section}{§}{§§}
+
+
+
+\title{%
+Preface
+}
+
+\author{Sholto Maud}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+
+\newpage
+\tableofcontents
+\pagenumbering{arabic}
+
+\newpage
+
+% \section[Preface]{Preface}
+This research project has sought to use an ancient water wheel know as a `Noria' to clarify an unusual concept of `Design' which originated in the Systems Ecology literature by 
+finding a way to translate the concept into established methods of Computational and Parametric Design. The unusual concept of `Design' is prevalent in the scholarship of Ecologist and General Systems Theorist, Howard T. \citeauthor{odum_emergy_1991}. \citeauthor{odum_emergy_1991} views human and non-human actors as potential `designers' that are, importantly, both subject to the same physical principles. This is to say that both human and non-human designers are viewed as subject to the very same Ontology, or Metaphysics of being, which determines the merit of their designs over both short and long timescales. 
+
+An important proviso in this unusual concept of `Design' is that it must somehow display `self-organization' characteristics. In \citeyear{ashby_principles_1947} the Cybernetics scholar Ross A. \citeauthor{ashby_principles_1947} defined self-organizing systems as those that are both determinate, having discernible limits or form, and that undergo spontaneous changes in internal organization which can in turn lead to behavioural change \citep[p.~125]{ashby_principles_1947}. Since the changes in internal organization resulted in behavioural change, \citeauthor{ashby_principles_1947} argued that system organization could be defined functionally, through mathematical functions. In the Cybernetic context, these functions characterized goal seeking behaviour of the entity that was self-organizing. In the context of the unusual concept of Design that originated from Systems Ecology, the goal seeking behaviour of interest to Cybernetics was referred to by \citeauthor{odum_systems_1983} as `Feedback Design' or ``autocatalytics'' \citep[pp.~6,451]{odum_systems_1983}.
+
+The present research project has been concerned to determine whether, and how, morphological features might be a variable controlled by Feedback Design. The interest here is whether this variable can be translated into established methods of Computational and Parametric Design. A key compartment identified in Feedback Design that might help in this determination is the storage of `energy' or matter. The reason for its significance is that the stored entity can then be fed back to incoming flows as a reward function, which in turn can to stimulate and regulate further inflow used in the development and self-organization of physical structures and advantageous morphologies \citep[p.~6]{odum_systems_1983}. With colleagues \citep{odum_modeling_2000}, \citeauthor{odum_systems_1983} developed a form of diagrams that were created to represent Feedback Design. Figure~\ref{img:odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7} is an example of these types of diagrams which are documented further in Chapters 2 and 3 where the computational simulation method is detailed, and in Chapter 4 which provides a walk-through example. For present purposes however, Figure~\ref{img:odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7} is produced here to show how Systems Ecologists like \citeauthor{odum_systems_1983} thought about `Design,' and how they depicted `Feedback Design' using diagrams: 
+
+\begin{figure}[H]
+    \centering  
+    \captionsetup{width=.6\linewidth}
+    \includegraphics[width=.7\linewidth]{odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7.jpg}
+    \caption{Energy Systems Language representation of `Feedback Design' in an Ecological System}
+    \label{img:odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7}
+\end{figure}
+
+Figure~\ref{img:odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7} is adapted from a diagram given by \citet[Fig.~1-3a, p.~7]{odum_systems_1983} to depict the feedback relationship between stored energy and an incoming flow that performs work. In Figure~\ref{img:odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7}  the feedback arrow which starts at the `Stored Potential Energy' compartment and points downwards at the `Work Transformation' compartment is supposed to represent the `Feedback Design' that is responsible for self-organization and behavioural change. The important thing to note here is that these diagrams were intended to represent computational models of real ecological systems, not just abstract cybernetic systems. This is important in the context of computational and parametric design because it means that diagrams like that in Figure~\ref{img:odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7} are referring to 3D physical artefacts that persist in the real world of Design. 
+
+The visual nature of Figure~\ref{img:odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7} may be familiar to the Design Thinker that uses visual programming CAD systems like Grasshopper\texttrademark\ which have a drag and drop interface that affords the connection of visual components with arrows and lines. To help consolidate this idea, Figure~\ref{img:odum_systems_1983_GrasshopperAutocatalytic-Consumer_Fig1-3a_p7} has been created by the author as an artistic impression of what a combination of \citeauthor{odum_systems_1983}'s Ecological Diagrams with Grasshopper\texttrademark\ could look like:
+
+\begin{figure}[H]
+    \centering
+    \captionsetup{width=.9\linewidth}
+    \includegraphics[width=\linewidth]{odum_systems_1983_GrasshopperAutocatalytic-Purple_Fig1-3a_p7.jpg}
+    \caption{Ecological Diagrams in Grasshopper}
+    \label{img:odum_systems_1983_GrasshopperAutocatalytic-Consumer_Fig1-3a_p7}
+\end{figure}
+
+Figure~\ref{img:odum_systems_1983_GrasshopperAutocatalytic-Consumer_Fig1-3a_p7} takes the Ecological Diagram from Figure~\ref{img:odum_systems_1983_Autocatalytic-Purple_Fig1-3a_p7} and juxtaposes it on a screenshot of the Grasshopper\texttrademark\ interface to show how the different compartments of the stored energy and work transformation are similar to the drag and drop components used to develop 3D designs in Grasshopper\texttrademark. Figure~\ref{img:odum_systems_1983_GrasshopperAutocatalytic-Consumer_Fig1-3a_p7} is also presented here to stimulate a liminal question of whether Parametric Designers and/or Ecologists could both do ecological visual programming in Grasshopper\texttrademark, or what would prevent it? Since both activities target computational outcomes initially it might appear that Grasshopper\texttrademark\ could serve as a compuataional platform for both Parametric 3D and Ecological Modelling. However the issue here seems to be the unusualness of the `Design' concept of  originating in the Systems Ecology literature. For if Grasshopper\texttrademark\ afforded the kind of ecological diagrams like that shown in Figure~\ref{img:odum_systems_1983_GrasshopperAutocatalytic-Consumer_Fig1-3a_p7}, what would be the expected output in the Rhino3D\texttrademark\ interface shown in Figure~\ref{img:rhino_blank_2024_what}? Would the morphology, for example, show the supposed features of self-organisation characteristic of Feedback Design?
+
+\begin{figure}[H]
+    \centering
+    \captionsetup{width=.9\linewidth}
+    \includegraphics[width=\linewidth]{rhino_blank_2024_what.jpg}
+        \caption{Rhino3D\texttrademark\ output of ecological model?}
+        \label{img:rhino_blank_2024_what}
+\end{figure}
+
+As noted above, \citeauthor{odum_systems_1983} used the term `autocatalytics' refer to self-organisation that happens as a result of Feedback Design. In these processes \citeauthor{odum_systems_1983} noted that as special type of stored energy can interact with an energy source to act as a \textbf{pump} in such a way that it tends to, ``\dots accelerate growth and maximize power'' \citet[p.~141]{odum_systems_1983}. This tendency was also referred to as the `\textit{maximium power principle}.' \citeauthor{odum_systems_1983}'s use of the words `pump' and `pumping' to describe the activity of Feedback Design directed the attention of the present research project towards the relation of morphology and performance in simple pumping devices. One of the simplest devices found in literature was the ancient water wheel known as the Noria. The Noria's pumping action serves to lift water from a river to a height where it may be thenb  either stored, or distributed through a network of aqueducts and pipes. The intention of the research has then been to use the Noria water wheel to explore the unusual concept of Feedback Design originating from the Systems Ecology literature.
+
+
+
+
+which as 
+
+
+
+
+to clarify the way that 
+
+maximize power
+
+
+
+Another way that  characterisation of Feedback Design here,  
+
+
+A key aspect of this is the determination of the objectives, the `should have,' or `should be' because a part of the merit of the objectives are determined by the environment. As \citeauthor{} noted, Lorentz defined self-organizing system as organized by their environment, not by themselves \citep[]{}. 
+
+
+`should have' is related to the concept of merit and objective.
+
+tools, however they have a diffenet concept of `purpose.'
+
+For \citet[p.~7]{odum_systems_1983}, not only does Figure~\ref{img:odum_systems_1983_GrasshopperAutocatalytic-Purple_Fig1-3a_p7} depict 
+Feedback Design but also a system design because it uses arrows to represent the relationships between the elements of the system. In this image the aim is to reveal the objective of an autocatalytic system, rather than Design of a system in the normative sense to achieve an objective. For \citet[p.~102]{odum_systems_1983}Figure~\ref{img:odum_systems_1983_GrasshopperAutocatalytic-Purple_Fig1-3a_p7} depicts a Feedback Design function that acts like a `structure pump' that is responsible for the development of physical structure of Ecological entities like autotrophs (trees and plants) and heterotrophs (animals and consumers). 
+
+
+%  \citep{ashby_principles_1962}
+%  \citep{ashby_principles_1947}
+%  \citep{chan_scaling_2024}
+%  \citep{aws_iot_2024}
+ % \citep{osmond_enquiry_2008}
+,  then 
+
+
+\citet[p.~15]{odum_systems_1983}
+
+
+
+The ability to use storage of energy to perform feedback design was included in \citeauthor{odum_systems_1983}'s definition of `Power' measured in scientific units of Watts. 
+
+Feedback Design appears to have all the features of Design Research, but, as noted above, has an Ontology that includes both human and non-human actors as Designers. 
+
+To provide further context to these types of Diagrams it may be helpful to refer to the high level methodological division in design theory made by \citet{behdad_synergy_2013}. \citeauthor{behdad_synergy_2013} made a  distinction between \textit{descriptive} and \textit{normative} Design methodologies, and in this sense Figure~\ref{img:odum_systems_1983_GrasshopperAutocatalytic-Purple_Fig1-3a_p7} would be descriptive of a system `Design' rather than normative. This is because \citeauthor{odum_systems_1983}'s Ecological Diagrams aim to describe `what is,' rather than say `what should be,' or what is the desired outcome. In other words, Figure~\ref{img:odum_systems_1983_GrasshopperAutocatalytic-Purple_Fig1-3a_p7} does not function in the way that a Design Thinker does visual programming with Grasshopper\texttrademark\ to develop a digital specification of the form and function for a potential artefact. In this context, the present research project aims to explore a normative use of \citeauthor{odum_systems_1983}'s Ecological Diagrams, to specify the Design form and function that an artefactual system should have. 
+
+
+In the present project, this kind of Design Ontology has been referred to as \textit{Principle-Based Design} because it views Design activity as performed within the discernible contextual limits of a determinate system, where discernible contextual limits are identified as `principles.' 
+
+
+
+
+This idea of `Design' led to a curious result that, if an entity self-organizes it is viewed as a designer; Humans, Birds, Insects, Trees, can all `Design.' In a curious twist, so long as it embodied the characteristic of self-organization a Designed artefact could also be its own Designer, which \citeauthor{odum_systems_1983} referred to as `Self-Design' \citep[pp.~6,451]{odum_systems_1983}. \citeauthor{odum_systems_1983} thought that this kind of Design behaviour constituted a major principle that could be observed in natural systems. The role of the human Designer was to align with, or `match,' the Design behaviour of natural systems.
+
+
+
+Principle-Based Design seeks to identify morphological constraints against of certain objectives.
+
+
+While Humans, Birds, Insects, Trees, can all `Design,' the idea here does not claim that they can, or should, all learn to use Computer Aided Design tools like  Rhino3D\texttrademark|Grasshopper\texttrademark. 
+
+
+\citeauthor{odum_ecological_1994} identified this type of goal seeking as a kind of, ``feedback design'', which he also called ``autocatalytics'' or ``Self-Design'' \citep[pp.~6,451]{odum_systems_1983}, saying that, ``A major design principle observed in natural systems is the feedback of energy from storages to simulate the inflow pathways as a reward from receiver storage to inflow source'' \citep[p.~6]{odum_systems_1983}.
+
+
+The unusualness of this concept may be highlighted by asking, `what is the objective of the Design?' Design objectives, like those analysed in \textit{Multi-Objective Optimization}, are a familiar feature of human Design activity, but when Design objectives are attributed to non-human actors like insects and plants they become liable to the critique of personification or anthropomorphic reification.
+
+biodemographics is the study of population dynamics of circular causal (cybernetic) systems, which might also be called teleological mechanism \citep[pp.~221-222]{hutchinson_circular_1948}.
+
+should an artificial intelligence device be told how to operate or should it learn on its own? 
+
+called `learning on its own' was  `self-organization.'
+
+
+
+
+interdisciplinarity. It presents a degree of `otherness' and `unfamiliarity' to the scholars of any one discipline. The relatively recent development of Liminality Theory \citep{rendell_working_2013, gardner_transformation_2017} has emerged as a means for scholars to accommodate the otherness of interdisciplinary concepts like this. However, Liminality Theory has not yet been applied to the case of the `Design' concept originating in Systems Ecology and so the present research project is concerned to explore this gap in the literature. 
+
+ However, perhaps due to its otherness, \citeauthor{odum_emergy_1991}'s concept of `Design' does not appear to have interested Ecologists or Systems Theorists. \citeauthor{odum_emergy_1991}'s ideas have only come to the attention of Design scholarship relatively recently \citep{}. But the focus of the Design scholars appears to have been more on \citeauthor{odum_environmental_1996}'s research into embodied energy accounting methodologies which occurred towards the end of his career \citep{odum_environmental_1996}. This could be because it holds promise as a way of solving the problem of accounting for Ecological value in Architecture, and might, therefore, provide a proper methodology for evaluating the sustainability of designs. But as a consequence, \citeauthor{odum_emergy_1991}'s concept of `Design' which includes both humans and non-humans as `designers' has been passed over.
+
+Curiously, \citeauthor{odum_emergy_1991}'s concept of `Design' appears not to have been research \citeauthor{odum_emergy_1991} pursued through design (RtD). Rather it was pursued through the process of dynamic systems modelling and simulation.
+
+
+In 1990 a diverse group of scholars held an international workshop in Siena, Italy, on the topic of \textit{Ecological Physical Chemistry} \citep{rossi_ecological_1991}. The intention of the workshop was described by one of the participants Ecologist and General Systems Theorist Howard T. \citeauthor{odum_emergy_1991}:
+
+\begin{quotation}
+    ``This conference seeks common principles for the microscopic world of chemistry and the large realms ecological economics and biogeochemical cycles. Whereas the small scale phenomena of these cycles are the traditional subject of chemistry, the large scale is the realm of biogeochemistry and environmental science. Both are self-organizing, one without humans, the other with humans helping to make choices.'' \citep[p.~25]{odum_emergy_1991}
+\end{quotation}
+
+In his paper, \citeauthor{odum_emergy_1991} related concepts of self-organization and multiscale principles to an unusual idea of `Design' that is of special interest to the present research project. It introduced the idea that Design could be generated without human input through the process of self-organization \citep[p.~40]{odum_emergy_1991} and implied that such Designs evolved according to criteria of merit: 
+
+\begin{quotation}
+    ``Designs which prevail after self organization are those that maximize power influx and efficient use, since more available energy provides the means to overcome other limitations and alternative design.'' \citep[p.~26]{odum_emergy_1991}
+\end{quotation}
+
+\citeauthor{odum_emergy_1991}'s definition here was later referred to as the \textit{maximum power principle} due to its emphasis on power flows, but also because it had the status of a physical principle. An underlying supposition of the present research project are that the scholarship has largely overlooked the Design emphasis in \citeauthor{odum_emergy_1991}'s scholarship, and that it would benefit both Ecology and Design (and associated disciplines) to focus attention on this aspect. Of specific interest is \citeauthor{odum_emergy_1991}'s idea that somehow design activity, ``\dots can draw in more resources and develop efficiency by using the transformed products''  \citep[p.~40]{odum_emergy_1991}. 
+
+This concept of Design that included both humans and non-human designers was also called `self-design,' and although central to ecological engineering and the concept of matching humans choices helping nature to make choices.
+
+
+
+
+Another idea was that humans could participate in this self-organization. And lastly, was the idea that the self-organization itself emerged in such a way that a pattern over time could be identified. The pattern was that self-organization had an historical tendency to `align' with a general principle. The word `align' is quoted here because there is some fuzziness in what it refers to in relation to both principles and self-organization, and one of the aims of the thesis is to clarify what the alignment is and means in the practical discipline of Design. For \citeauthor{odum_emergy_1991}, the general principle that the conference was seeking, and he defined it specifically in relation to design below:
+
+
+In the present research project it is proposed that \citeauthor{odum_emergy_1991} conceived `design' as an activity that was not exclusively performed by humans. 
+
+A further supposition is that evidence of humans making choices that align with the self-organization principle can be seen most clearly up to the early modern period when fossil fuels took over as the dominant source of mechanical power. Prior to this period, large scale human design effort required options that clearly aligned with the principles that specify the designs of self-organizational systems that do not involve humans. This back-looking strategy is also sometimes called `Digital Crafts'   
+
+
+
+
+
+
+
+ 
+A key contrast for \citeauthor{odum_emergy_1991} was thermodynamics and kinetics. In physical chemistry, chemical thermodynamics is concerned with the direction of chemical reaction, while chemical kinetics is concerned with the rate of chemical reaction. The idea here was to find a principle that operated in physical chemistry, but which could be generalized and applied across smaller and larger scales of the sciences. 
+
+Figure~\ref{img:maud_dbiyat_noria_2024_adaptation} is an image of a Noria water wheel adapted from \citet[Fig.~2]{dbiyat_norias_2019},  with an overlay of the Energy Systems Language, preferred by \citeauthor{odum_emergy_1991}. The analogy to physical chemistry here is that the direction of water flow is down hill and eventually towards the sea if it is not evaporated. However, human design choices were able to intervene in this direction of water flow by using the river flow as a source of power to temporarily store and lift water at a certain rate.
+
+These conditions set the maximum viable height of an aqueduct, and, therefore the maximum number of arcade (arches) layers required in the aqueduct design. 
+
+The process of design, ``\dots can draw in more resources and develop efficiency by using the transformed products''  \citep[p.~40]{odum_emergy_1991}. 
+
+
+% \begin{landscape}
+
+% \begin{figure}[H]
+%     \captionsetup{width=.8\linewidth}
+%     \includegraphics[width=.4\linewidth]{maud_dbiyat_noria_2024_adaptation.jpg}
+%     \caption{Noria water wheel with \textit{Energese} overlay}
+%     \label{img:maud_dbiyat_noria_2024_adaptation}
+% \end{figure}   
+
+\begin{figure}[H]
+    \centering  
+    \captionsetup{width=.6\linewidth}
+    \includegraphics[width=\linewidth]{dbiyat_norias_2019_Fig2_LongDistancePhoto.jpg}
+    \caption{Dbiyat Noria water wheel from \citet[Fig.~2]{dbiyat_norias_2019}}
+    \label{img:dbiyat_norias_2019_Fig2_LongDistancePhoto}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \captionsetup{width=.6\linewidth}
+    % \vspace{2em}% Space between images
+    \begin{subfigure}{.5\linewidth}
+        \centering
+        \captionsetup{width=.9\linewidth}
+        \includegraphics[width=\linewidth]{maud_dbiyat_noria_2024_adaptation.jpg}
+        \caption{Noria \& Energese-von Bertalanffy overlay}
+        \label{img:maud_dbiyat_noria_2024_adaptation}
+    \end{subfigure}
+    \hspace{1em}% Space between images
+    \vspace{2em}% Space between images
+    \begin{subfigure}{.45\linewidth}
+        \centering
+        \captionsetup{width=.8\linewidth}
+        \includegraphics[width=\linewidth]{maud_dbiyat_noria_2024_blackadaptation.jpg}
+        \caption{Abstractify}
+        \label{img:maud_dbiyat_noria_2024_blackadaptation}
+    \end{subfigure}
+    \hspace{4em}% Space between images
+    \vspace{2em}% Space between images
+    \begin{subfigure}{.45\linewidth}
+        \centering
+        \captionsetup{width=.8\linewidth}
+        \includegraphics[width=\linewidth]{maud_dbiyat_noria_2024_black-labels.jpg}
+        \caption{Label}
+        \label{img:maud_dbiyat_noria_2024_black-labels}
+    \end{subfigure}
+    \hspace{1em}% Space between images
+    % \vspace{2em}% Space between images
+    \begin{subfigure}{.45\linewidth}
+        \centering
+        \captionsetup{width=.8\linewidth}
+        \includegraphics[width=\linewidth]{maud_dbiyat_noria_2024_black-labels-window-interest.jpg}
+        \caption{Identify window of interest}
+        \label{img:maud_dbiyat_noria_2024_black-labels-window-interest}
+    \end{subfigure}    
+    \hspace{1em}% Space between images
+    \begin{subfigure}{.4\linewidth}
+        \centering
+        \captionsetup{width=.8\linewidth}
+        \includegraphics[width=\linewidth]{maud_dbiyat_noria_2024_rearranged.jpg}
+        \caption{Rearrange}
+        \label{img:maud_dbiyat_noria_2024_rearranged}
+    \end{subfigure}    
+    \hspace{1em}% Space between images
+    \vspace{3em}% Space between images
+    \begin{subfigure}{.44\linewidth}
+        \centering
+        \captionsetup{width=.8\linewidth}
+        \includegraphics[width=\linewidth]{maud_dbiyat_noria_2024_rearranged-infills.jpg}
+        \caption{Fill-in missing elements}
+        \label{img:maud_dbiyat_noria_2024_rearranged-infills}
+    \end{subfigure}
+    \begin{subfigure}{.45\linewidth}
+        \centering
+        \captionsetup{width=.8\linewidth}
+        \includegraphics[width=\linewidth]{maud_dbiyat_noria_2024_Energese-simple.jpg}
+        \caption{Simplify}
+        \label{img:maud_dbiyat_noria_2024_Energese-simple}
+    \end{subfigure}    
+    \caption{Workflow for developing the Energy Systems Language Model}
+    \label{img:workflow}
+\end{figure} 
+
+% \end{landscape}
+
+The sequence of images in Figure~\ref{img:workflow} depict a step-by-step workflow for the development of an Energy Systems Language model starting with a photo of the Noria hydraulic-hydrologic system.  Figure~\ref{img:maud_dbiyat_noria_2024_adaptation} is an adaption of the image reproduced in Figure~\ref{img:dbiyat_norias_2019_Fig2_LongDistancePhoto}. Figure~\ref{img:maud_dbiyat_noria_2024_adaptation} overlays the Energy Systems Language on the image of a river inflow to and outflow from two Norias each with an attached aqueduct. The Energy Systems Language was developed in part for the purpose of making diagrammatic representations of the von Bertalanffy compartments, which are the little symbols of semicircles with a triangular hat shown in each image. Figure~\ref{img:maud_dbiyat_noria_2024_blackadaptation} shows a process of `abstractification,' where the image of the physical system has been removed leaving the Energy Systems Language symbols and flow arrows remaining, with the colour changed to black for the contrast against a white background. Figure~\ref{img:maud_dbiyat_noria_2024_black-labels} retains the Energy Systems Language diagram, with the addition of labels on each of the flow arrows and von Bertalanffy compartments. 
+
+In Figure~\ref{img:maud_dbiyat_noria_2024_black-labels-window-interest} a rectangle is used to identify the `systems attention frame' \citep[p.~16]{odum_modeling_2000}, also called the `window of interest.' The window shows that only the Large Noria is of interest for present purposes with a river inflow shown by the input arrow, and two outflows to aqueduct 1 and the downstream river. With the system of interest selected, Figure~\ref{img:maud_dbiyat_noria_2024_rearranged} shows the outcome of a rearrangement using the diagrammatic syntax developed by \citeauthor{odum_modeling_2000} as a guide. In \citeauthor{odum_modeling_2000}'s diagrammatic syntax, lower-quality flows and compartments are positioned to the left of the image, and higher quality and outflows to the right. In hydrology this would equate to a progression of upstream on the left to downstream on the right-hand side of the diagram. Figure~\ref{img:maud_dbiyat_noria_2024_rearranged} includes a label within the von Bertalanffy compartment to indicate that the buckets of the water wheel are operating as von Bertalanffy compartment. Figure~\ref{img:maud_dbiyat_noria_2024_rearranged} also still retains the `height' label below the von Bertalanffy compartment to indicate that there is work being performed. Figure~\ref{img:maud_dbiyat_noria_2024_rearranged-infills} has the `height' label replaced by an `interaction' compartment which is used to represent an interaction between the wheel and the river, where the river applies a force against the wheel paddles to motivate wheel rotation. In addition, a circular `source' symbol has been included to indicate that rainfall provides the source of the water flowing in the river. Figure~\ref{img:maud_dbiyat_noria_2024_Energese-simple} retains all the compartments and arrows from Figure~\ref{img:maud_dbiyat_noria_2024_rearranged-infills}, however converts the word-labels into simplified symbols following \citeauthor{odum_modeling_2000}'s nomenclatural conventions.
+
+
+von Bertalanffy compartments
+
+and  with Figure~\ref{img:maud_dbiyat_noria_2024_adaptation}  \textit{Energese} in black with no geography background
+
+% img:maud_dbiyat_noria_2024_blackadaptation
+
+
+Certain conditions of the hydrological environment provided the upper bounds for the maximal rate that water could be lifted. Humans helped by designing and constructing the aqueducts and lifting mechanisms, but in this example human designs and site selection were subject to alignment with the affordances of the hydrological environment.
+
+This thermodynamics and kinetics 
+
+
+
+
+in which a reaction occurs but in itself tells nothing about its rate.
+
+
+
+ for maximum power.
+
+
+\citeauthor{odum_emergy_1991} went on to describe the background to the conference under the heading ``Systems Biogeochemistry and Maximum Power.'' 
+
+
+\citeyear{odum_emergy_1991} 
+
+\newpage
+
+
+
+
+\addcontentsline{toc}{section}{References}
+% \bibliography{MyBibtexLibrary.bib} % Natbib
+\bibliography{/Users/sholtomaud/bib/MyLibrary.bib} % Natbib
+
+
+
+\end{document}

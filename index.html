@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' ws: https://pub.orcid.org;"
+    />
+
+    <!-- ── EDIT: page + social metadata ─────────────────────────────── -->
+    <title>Sholto Maud</title>
+    <meta name="description" content="Research, works and writing by Sholto Maud." />
+    <meta name="theme-color" content="#0A0C11" />
+    <meta property="og:title" content="Sholto Maud" />
+    <meta property="og:description" content="Research, works and writing by Sholto Maud." />
+    <meta property="og:type" content="profile" />
+
+    <!-- SVG favicon, inlined so the page is a single standalone file.
+         "SM" monogram with no background — fill flips black/white via an
+         embedded prefers-color-scheme media query, so it stays legible in
+         both light and dark browser tab bars. Georgia/serif fallback only
+         (no Fraunces): favicon rendering can't reliably rely on the page's
+         web font having loaded. -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHN0eWxlPnRleHR7ZmlsbDojMDAwfUBtZWRpYSAocHJlZmVycy1jb2xvci1zY2hlbWU6IGRhcmspe3RleHR7ZmlsbDojZmZmfX08L3N0eWxlPjx0ZXh0IHg9IjE2IiB5PSIyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsICdUaW1lcyBOZXcgUm9tYW4nLCBzZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjYwMCIgbGV0dGVyLXNwYWNpbmc9Ii0wLjUiPlNNPC90ZXh0Pjwvc3ZnPgo=" />
+
+    <!-- One web font for the display face; everything else is system (fast) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap" rel="stylesheet" />
+
+    <script type="module" src="src/main.ts"></script>
+  </head>
+  <body>
+    <div id="router-outlet"></div>
+  </body>
+</html>
