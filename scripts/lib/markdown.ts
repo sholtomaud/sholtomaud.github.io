@@ -18,7 +18,7 @@ export function splitParagraphs(body: string): string[] {
 
 /**
  * Splits plain prose (no frontmatter) into blank-line-separated paragraphs.
- * For content with no metadata fields, e.g. content/about/bio.md.
+ * For content with no metadata fields, e.g. content/about/autobio.md.
  */
 export function parseParagraphs(raw: string): string[] {
   return splitParagraphs(raw);

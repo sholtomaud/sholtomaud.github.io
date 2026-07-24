@@ -6,7 +6,7 @@ import { parseWorkManifest } from './lib/manifest.ts';
 import { generateResearchPublications } from './lib/research-content.ts';
 
 export const PERSPECTIVES_DIR = 'content/perspectives';
-export const ABOUT_BIO_PATH = 'content/about/bio.md';
+export const ABOUT_BIO_PATH = 'content/about/autobio.md';
 export const WORKS_DIR = 'content/works';
 const OUTPUT_DIR = 'src/generated';
 

@@ -78,14 +78,50 @@ Apple's `container` CLI doesn't expose (no Docker daemon / `podman` here).
   the full suite isn't duplicated with `deploy.yml` on pushes to `main`,
   which re-runs the same checks before deploying. Adapted from boba's own
   CI, plus a `tsgo` typecheck step boba's upstream example doesn't run.
-- `.github/workflows/deploy.yml` — same checks, then `npm run build` and
-  deploy via `actions/deploy-pages` (not a `gh-pages` branch push). This
-  requires the repo's Settings → Pages → "Build and deployment" source set
-  to **GitHub Actions**, and — since this repo is currently private — a
-  GitHub plan that supports Pages on private repos.
+- `.github/workflows/deploy.yml` — runs on push to `main` only: same checks,
+  then `npm run build` and deploy via `actions/deploy-pages` (not a
+  `gh-pages` branch push). This requires the repo's Settings → Pages →
+  "Build and deployment" source set to **GitHub Actions** (`build_type:
+  workflow`). The repo is **public** — Pages via Actions needs that (or a
+  paid plan for private repos; the GitHub API rejects the `workflow` source
+  on a private repo on the free plan with a 422).
 - Both jobs run inside the `mcr.microsoft.com/playwright:v1.61.1-noble`
   container image, matching the `@playwright/test` version pinned in
   `package.json`; bump both together.
+
+### Repo settings (not in the tree — record here so they aren't rediscovered)
+
+- **Pages source**: GitHub Actions (`build_type: workflow`). Serving the
+  `main` branch root instead would try to load the raw `src/main.ts` from
+  `index.html` and break, since Pages has no build step of its own.
+- **`main` is a protected branch**: PRs required before merging (0 approvals
+  — solo repo), the `test` status check (from `ci.yml`) must pass and the
+  branch must be up to date (`strict`), conversation resolution required,
+  force-push and deletion blocked. `enforce_admins` is off, so the owner
+  keeps an emergency bypass — don't rely on it for normal changes.
+
+### Landing a change (the standard workflow)
+
+Because `main` is protected, you cannot push to it directly. Every change
+lands the same way:
+
+1. Branch off `main`: `git checkout -b <type>/<slug>` (e.g. `fix/…`, `feat/…`).
+2. Make the change (TDD for new logic — see Testing below).
+3. **Run the full pipeline locally and get it green first**: `make ci`
+   (install → typecheck → build → unit → e2e, in the Apple `container`
+   runtime — the same steps `ci.yml`/`deploy.yml` run). `make -n ci` is a
+   dry run that only *prints* the commands; it proves nothing. Do not
+   commit until real `make ci` passes.
+4. Commit, then `git push -u origin <branch>`.
+5. Open a PR to `main` (`gh pr create`). `ci.yml` runs the `test` check on
+   the PR; it must go green (and the branch must be up to date with `main`)
+   before the PR is mergeable. No reviewer approval is required.
+6. Merge the PR. The merge is a push to `main`, which triggers `deploy.yml`
+   → build + deploy to Pages. Confirm that run is green.
+
+`gh act` is installed but **cannot** run these workflows here (it needs a
+Docker-API socket; the Apple `container` CLI doesn't expose one). `make ci`
+is the local mirror — use it, not `act`.
 
 ## Adding a page
 
@@ -119,7 +155,7 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   `<slug>.md` file here — `about-page.ts` renders the "Perspectives" list
   (grouped into Human/AI sections, newest first within each) directly from
   this generated JSON, so no HTML edit is needed to link it in.
-- `content/about/bio.md` (plain prose, no frontmatter) →
+- `content/about/autobio.md` (plain prose, no frontmatter) →
   `src/generated/about.json`, imported by `about-page.ts`.
 - `content/works/<slug>/Manifest.md` — one directory per project (a
   "project assembly": a manifest plus, potentially, other project-local
