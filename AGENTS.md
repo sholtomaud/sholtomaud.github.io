@@ -119,7 +119,7 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   `<slug>.md` file here — `about-page.ts` renders the "Perspectives" list
   (grouped into Human/AI sections, newest first within each) directly from
   this generated JSON, so no HTML edit is needed to link it in.
-- `content/about/bio.md` (plain prose, no frontmatter) →
+- `content/about/autobio.md` (plain prose, no frontmatter) →
   `src/generated/about.json`, imported by `about-page.ts`.
 - `content/works/<slug>/Manifest.md` — one directory per project (a
   "project assembly": a manifest plus, potentially, other project-local
