@@ -49,7 +49,7 @@ test('unknown route shows the styled 404 page (black on white)', async ({ page }
 test('site-header nav exposes all four sections on inner pages', async ({ page }) => {
   await page.goto('/research');
   const nav = page.locator('site-header nav a[data-nav]');
-  await expect(nav).toHaveText(['Research', 'Projects', 'Contact', 'About']);
+  await expect(nav).toHaveText(['Research', 'Projects', 'Writing', 'Contact', 'About']);
 });
 
 test('client-side navigation to Projects lists at least one project', async ({ page }) => {
@@ -60,6 +60,16 @@ test('client-side navigation to Projects lists at least one project', async ({ p
   // Content-agnostic: just confirms the projects list rendered something,
   // not which/how many projects are listed — that's editable content.
   await expect(page.locator('projects-page .project-item__title').first()).toBeVisible();
+});
+
+test('Writing page renders (with an empty-state until content is added)', async ({ page }) => {
+  await page.goto('/');
+  await page.click('a[data-nav]:has-text("Writing")');
+  await expect(page).toHaveURL(/\/writing$/);
+  await expect(page.locator('writing-page h1')).toHaveText('Writing');
+  // With no content/writing/*.md yet, the page shows its empty state rather
+  // than a list; once items exist, `.writing-item` entries render instead.
+  await expect(page.locator('writing-page #writing-mount')).not.toBeEmpty();
 });
 
 test('Contact page reveals the email only on interaction', async ({ page }) => {

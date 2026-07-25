@@ -8,6 +8,7 @@ import { generateResearch } from './lib/research-content.ts';
 export const PERSPECTIVES_DIR = 'content/perspectives';
 export const ABOUT_BIO_PATH = 'content/about/autobio.md';
 export const PROJECTS_DIR = 'content/projects';
+export const WRITING_DIR = 'content/writing';
 const OUTPUT_DIR = 'src/generated';
 
 async function writeJson(filename: string, data: unknown): Promise<void> {
@@ -59,11 +60,25 @@ export async function regenerateProjects(): Promise<void> {
   console.log(`[generate-content] Wrote ${OUTPUT_DIR}/projects.json (${projects.length} items)`);
 }
 
+export async function regenerateWriting(): Promise<void> {
+  const files = (await readdir(WRITING_DIR))
+    .filter((file) => file.endsWith('.md'))
+    .sort((a, b) => a.localeCompare(b));
+
+  const writing = await Promise.all(
+    files.map(async (file) => parseWorkManifest(await readFile(path.join(WRITING_DIR, file), 'utf-8')))
+  );
+  writing.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
+  await writeJson('writing.json', writing);
+  console.log(`[generate-content] Wrote ${OUTPUT_DIR}/writing.json (${writing.length} items)`);
+}
+
 export async function generateAll(): Promise<void> {
   await regeneratePerspectives();
   await regenerateResearch();
   await regenerateAboutBio();
   await regenerateProjects();
+  await regenerateWriting();
 }
 
 // Only auto-run when executed directly (`node scripts/generate-content.ts`),

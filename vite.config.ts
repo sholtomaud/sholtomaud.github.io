@@ -4,9 +4,11 @@ import {
   PERSPECTIVES_DIR,
   ABOUT_BIO_PATH,
   PROJECTS_DIR,
+  WRITING_DIR,
   regeneratePerspectives,
   regenerateAboutBio,
   regenerateProjects,
+  regenerateWriting,
 } from './scripts/generate-content.ts';
 
 const DEBOUNCE_MS = 200;
@@ -26,6 +28,11 @@ const WATCHED_SOURCES = [
     watchPath: PROJECTS_DIR,
     isMatch: (file: string) => file.includes(`/${PROJECTS_DIR}/`),
     regenerate: regenerateProjects,
+  },
+  {
+    watchPath: WRITING_DIR,
+    isMatch: (file: string) => file.includes(`/${WRITING_DIR}/`),
+    regenerate: regenerateWriting,
   },
 ];
 
