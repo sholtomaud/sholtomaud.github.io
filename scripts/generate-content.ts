@@ -7,7 +7,7 @@ import { generateResearch } from './lib/research-content.ts';
 
 export const PERSPECTIVES_DIR = 'content/perspectives';
 export const ABOUT_BIO_PATH = 'content/about/autobio.md';
-export const WORKS_DIR = 'content/works';
+export const PROJECTS_DIR = 'content/projects';
 const OUTPUT_DIR = 'src/generated';
 
 async function writeJson(filename: string, data: unknown): Promise<void> {
@@ -46,24 +46,24 @@ export async function regenerateResearch(): Promise<void> {
   console.log(`[generate-content] Wrote ${OUTPUT_DIR}/research.json (${research.length} items)`);
 }
 
-export async function regenerateWorks(): Promise<void> {
-  const files = (await readdir(WORKS_DIR))
+export async function regenerateProjects(): Promise<void> {
+  const files = (await readdir(PROJECTS_DIR))
     .filter((file) => file.endsWith('.md'))
     .sort((a, b) => a.localeCompare(b));
 
-  const works = await Promise.all(
-    files.map(async (file) => parseWorkManifest(await readFile(path.join(WORKS_DIR, file), 'utf-8')))
+  const projects = await Promise.all(
+    files.map(async (file) => parseWorkManifest(await readFile(path.join(PROJECTS_DIR, file), 'utf-8')))
   );
-  works.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
-  await writeJson('works.json', works);
-  console.log(`[generate-content] Wrote ${OUTPUT_DIR}/works.json (${works.length} items)`);
+  projects.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
+  await writeJson('projects.json', projects);
+  console.log(`[generate-content] Wrote ${OUTPUT_DIR}/projects.json (${projects.length} items)`);
 }
 
 export async function generateAll(): Promise<void> {
   await regeneratePerspectives();
   await regenerateResearch();
   await regenerateAboutBio();
-  await regenerateWorks();
+  await regenerateProjects();
 }
 
 // Only auto-run when executed directly (`node scripts/generate-content.ts`),

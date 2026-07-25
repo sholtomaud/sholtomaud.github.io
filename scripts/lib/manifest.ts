@@ -70,7 +70,7 @@ export function parseIniFrontmatter(raw: string): IniFrontmatter {
 }
 
 /**
- * Parses a project work file (content/works/<slug>.md): INI frontmatter whose
+ * Parses a project file (content/projects/<slug>.md): INI frontmatter whose
  * `[artifact.N]` sections each become one entry in `artifacts`, followed by a
  * plain-prose summary.
  */

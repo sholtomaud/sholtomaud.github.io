@@ -38,7 +38,7 @@ src/
 │   ├── home-page/            # Landing card — the site's only page with its own embedded nav
 │   ├── site-header/           # Shared nav, used by every other page
 │   ├── research-page/         # Publications / Preprints / Planned, PDF + external-link entries
-│   ├── works-page/
+│   ├── projects-page/
 │   ├── contact-page/
 │   ├── about-page/             # Short bio + links out to AI "Perspectives"
 │   └── perspective-page/       # /about/:slug — one AI's take on Sholto, keyed by slug

@@ -18,7 +18,7 @@ import { test, expect } from '@playwright/test';
 const PAGES = [
   { route: '/', el: 'home-page' },
   { route: '/research', el: 'research-page' },
-  { route: '/works', el: 'works-page' },
+  { route: '/projects', el: 'projects-page' },
   { route: '/about', el: 'about-page' },
   { route: '/contact', el: 'contact-page' },
 ];

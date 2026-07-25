@@ -26,27 +26,27 @@
   line-height: 1.6;
 }
 
-.works__list {
+.projects__list {
   list-style: none;
   margin: 0;
   padding: 0;
   border-top: 1px solid var(--line);
 }
 
-.work-item {
+.project-item {
   display: block;
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--line);
 }
 
-.work-item__title {
+.project-item__title {
   display: block;
   font-size: 1.05rem;
   font-family: var(--display-small);
   color: var(--text);
 }
 
-.work-item__summary {
+.project-item__summary {
   font-family: var(--display-small);
   margin: 0.4rem 0 0;
   font-size: 0.85rem;
@@ -54,14 +54,14 @@
   line-height: 1.6;
 }
 
-.work-item__links {
+.project-item__links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.1rem;
   margin-top: 0.65rem;
 }
 
-.work-item__link {
+.project-item__link {
   font-size: 0.82rem;
   color: var(--link);
   text-decoration: none;
@@ -69,8 +69,8 @@
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.work-item__link:hover,
-.work-item__link:focus-visible {
+.project-item__link:hover,
+.project-item__link:focus-visible {
   color: var(--link-hover);
   border-color: var(--link-hover);
 }

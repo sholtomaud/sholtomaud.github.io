@@ -49,17 +49,17 @@ test('unknown route shows the styled 404 page (black on white)', async ({ page }
 test('site-header nav exposes all four sections on inner pages', async ({ page }) => {
   await page.goto('/research');
   const nav = page.locator('site-header nav a[data-nav]');
-  await expect(nav).toHaveText(['Research', 'Works', 'Contact', 'About']);
+  await expect(nav).toHaveText(['Research', 'Projects', 'Contact', 'About']);
 });
 
-test('client-side navigation to Works lists at least one project', async ({ page }) => {
+test('client-side navigation to Projects lists at least one project', async ({ page }) => {
   await page.goto('/');
-  await page.click('a[data-nav]:has-text("Works")');
-  await expect(page).toHaveURL(/\/works$/);
-  await expect(page.locator('works-page h1')).toHaveText('Works');
-  // Content-agnostic: just confirms the works list rendered something,
+  await page.click('a[data-nav]:has-text("Projects")');
+  await expect(page).toHaveURL(/\/projects$/);
+  await expect(page.locator('projects-page h1')).toHaveText('Projects');
+  // Content-agnostic: just confirms the projects list rendered something,
   // not which/how many projects are listed — that's editable content.
-  await expect(page.locator('works-page .work-item__title').first()).toBeVisible();
+  await expect(page.locator('projects-page .project-item__title').first()).toBeVisible();
 });
 
 test('Contact page reveals the email only on interaction', async ({ page }) => {
