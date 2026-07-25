@@ -3,6 +3,7 @@ import '../site-header/site-header.ts';
 import template from './writing-page.html?raw';
 import style from './writing-page.css?raw';
 import writingData from '../../generated/writing.json' with { type: 'json' };
+import { escapeHtml, renderInlineMarkdown } from '../../core/inline-markdown.ts';
 
 interface WritingArtifact {
   kind: string;
@@ -17,14 +18,6 @@ interface WritingItem {
   artifacts: WritingArtifact[];
 }
 
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 function renderWritingItem(item: WritingItem): string {
   const links = item.artifacts
     .map(
@@ -36,7 +29,7 @@ function renderWritingItem(item: WritingItem): string {
   return `
     <li class="writing-item">
       <span class="writing-item__title">${escapeHtml(item.title)}</span>
-      ${item.summary ? `<p class="writing-item__summary">${escapeHtml(item.summary)}</p>` : ''}
+      ${item.summary ? `<p class="writing-item__summary">${renderInlineMarkdown(item.summary)}</p>` : ''}
       ${links ? `<div class="writing-item__links">${links}</div>` : ''}
     </li>
   `;

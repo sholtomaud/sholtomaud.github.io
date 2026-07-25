@@ -233,6 +233,12 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   a live `fetch()` in the browser on every page load; moving it to build
   time means visitors no longer hit ORCID's API directly.
 
+**Summaries support inline links.** The summary body of research, project,
+and writing items may contain markdown links (`[text](https://…)`), rendered
+by `renderInlineMarkdown` (`src/core/inline-markdown.ts`) — HTML is escaped
+first, then `http(s)` links are linkified (other schemes stay literal text).
+Titles/venues are still plain escaped text, not markdown.
+
 All of these are produced by `scripts/generate-content.ts` (parsing helpers
 live in `scripts/lib/`), run via the `content:generate` npm script, wired
 as a `predev`/`prestart`/`prebuild`/`pretypecheck` hook so

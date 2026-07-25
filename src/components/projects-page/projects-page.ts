@@ -3,6 +3,7 @@ import '../site-header/site-header.ts';
 import template from './projects-page.html?raw';
 import style from './projects-page.css?raw';
 import projectsData from '../../generated/projects.json' with { type: 'json' };
+import { escapeHtml, renderInlineMarkdown } from '../../core/inline-markdown.ts';
 
 interface ProjectArtifact {
   kind: string;
@@ -17,14 +18,6 @@ interface ProjectItem {
   artifacts: ProjectArtifact[];
 }
 
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 function renderProjectItem(item: ProjectItem): string {
   const links = item.artifacts
     .map(
@@ -36,7 +29,7 @@ function renderProjectItem(item: ProjectItem): string {
   return `
     <li class="project-item">
       <span class="project-item__title">${escapeHtml(item.title)}</span>
-      ${item.summary ? `<p class="project-item__summary">${escapeHtml(item.summary)}</p>` : ''}
+      ${item.summary ? `<p class="project-item__summary">${renderInlineMarkdown(item.summary)}</p>` : ''}
       ${links ? `<div class="project-item__links">${links}</div>` : ''}
     </li>
   `;
