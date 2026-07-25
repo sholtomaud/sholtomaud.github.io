@@ -29,6 +29,89 @@ body {
   min-height: 100dvh;
 }
 
+/* ── 404 ─────────────────────────────────────────────────────────
+   A deliberately light page — the inverse of the dark site — as poised
+   as the home card: the code set in the display face at the same size as
+   the home-page name, black on white. */
+.route-404 {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding:
+    calc(clamp(1.5rem, 5vw, 4rem) + env(safe-area-inset-top))
+    calc(clamp(1.25rem, 5vw, 4rem) + env(safe-area-inset-right))
+    calc(clamp(1.5rem, 5vw, 4rem) + env(safe-area-inset-bottom))
+    calc(clamp(1.25rem, 5vw, 4rem) + env(safe-area-inset-left));
+  background: #ffffff;
+  color: #111111;
+}
+
+.route-404__inner {
+  width: min(34rem, 100%);
+  animation: route-404-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.route-404__code {
+  font-family: var(--display);
+  font-weight: 400;
+  /* matches home-page .name */
+  font-size: clamp(2.4rem, 10.5vw, 4.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0;
+}
+
+.route-404__rule {
+  width: 3rem;
+  height: 1px;
+  margin: clamp(1.4rem, 4vw, 1.9rem) auto clamp(1.25rem, 4vw, 1.75rem);
+  border: 0;
+  background: #000000;
+  opacity: 0.2;
+}
+
+.route-404__msg {
+  font-family: var(--display);
+  font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+  color: #333333;
+  margin: 0 0 1.75rem;
+}
+
+.route-404__home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.25rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  transition: border-color 0.25s ease;
+}
+
+.route-404__home:hover,
+.route-404__home:focus-visible {
+  border-color: #000000;
+  outline: none;
+}
+
+@keyframes route-404-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
