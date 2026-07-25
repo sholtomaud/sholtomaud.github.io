@@ -209,6 +209,13 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   `date` if ordering doesn't matter. (Projects are flat files, not a folder
   per project — one that ever needs colocated local assets would be a
   future special case.)
+- `content/writing/<slug>.md` — screenplays, essays, longer-form writing.
+  **Same INI manifest shape and parser as projects** (`parseWorkManifest`),
+  just a separate section/collection: → `src/generated/writing.json`,
+  imported by `writing-page.ts`. The directory ships empty (a `.gitkeep`)
+  with a graceful empty-state on the page; drop a `<slug>.md` in to populate
+  it. Projects vs Writing is the deliberate taxonomy split — software/builds
+  vs creative/long-form text — even though they share a renderer.
 - `content/research/planned/<slug>.md` — authored "planned/in-progress"
   research items, same INI frontmatter as a work manifest but with only
   flat fields (no `[artifact.N]` sections): `title` (required), plus
@@ -238,11 +245,12 @@ The `pre*` hooks only run once, at startup, so on their own they wouldn't
 catch edits made to `content/*.md` while `make dev` is already running.
 `vite.config.ts` closes that gap with a small dev-only plugin
 (`watchContentPlugin`) that adds `content/perspectives/`,
-`content/about/autobio.md`, and `content/projects/` to Vite's own
-already-running file watcher and calls the matching granular
-`regeneratePerspectives()`/`regenerateAboutBio()`/`regenerateProjects()`
-function (exported from `scripts/generate-content.ts`) in-process when one
-changes — no new file-watching dependency, no second terminal/container.
+`content/about/autobio.md`, `content/projects/`, and `content/writing/` to
+Vite's own already-running file watcher and calls the matching granular
+`regeneratePerspectives()`/`regenerateAboutBio()`/`regenerateProjects()`/
+`regenerateWriting()` function (exported from `scripts/generate-content.ts`)
+in-process when one changes — no new file-watching dependency, no second
+terminal/container.
 Research (`regenerateResearch()`) is deliberately **not** wired into this
 watcher: it hits the ORCID API, so it stays a startup-only regeneration —
 edits to `content/research/planned/*.md` or `publications.bib` need a
