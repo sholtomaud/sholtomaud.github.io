@@ -16,18 +16,27 @@ export interface WorkManifest {
   summary: string;
 }
 
+export interface IniFrontmatter {
+  /** Top-level `key = value` lines (before any `[section]` header). */
+  fields: Record<string, string>;
+  /** `[name]` sections, each a flat map of its own `key = value` lines. */
+  sections: Record<string, Record<string, string>>;
+  /** Raw markdown body after the closing `---` (unsplit). */
+  body: string;
+}
+
 /**
- * Parses a project Manifest.md: an INI-flavoured frontmatter block (flat
- * `key = value` lines, plus zero or more `[artifact.N]` sections — each
- * becomes one entry in `artifacts`), followed by a plain-prose summary
- * body. INI instead of nested YAML: same "list of records" shape your
- * artifacts need, without indentation-sensitive parsing rules or a YAML
- * dependency — just section headers and flat key/value lines.
+ * Parses an INI-flavoured frontmatter block — flat `key = value` lines, plus
+ * zero or more `[section]` blocks — delimited by `---`, followed by a body.
+ * INI instead of nested YAML: the same "list of records" shape our content
+ * needs, without indentation-sensitive rules or a YAML dependency. Shared by
+ * work manifests (which use `[artifact.N]` sections) and planned-research
+ * items (which use only the flat fields).
  */
-export function parseWorkManifest(raw: string): WorkManifest {
+export function parseIniFrontmatter(raw: string): IniFrontmatter {
   const match = raw.match(FRONTMATTER_RE);
   if (!match) {
-    throw new Error('Manifest is missing its --- frontmatter block');
+    throw new Error('Content is missing its --- frontmatter block');
   }
 
   const fields: Record<string, string> = {};
@@ -57,6 +66,17 @@ export function parseWorkManifest(raw: string): WorkManifest {
     }
   }
 
+  return { fields, sections, body: raw.slice(match[0].length) };
+}
+
+/**
+ * Parses a project work file (content/works/<slug>.md): INI frontmatter whose
+ * `[artifact.N]` sections each become one entry in `artifacts`, followed by a
+ * plain-prose summary.
+ */
+export function parseWorkManifest(raw: string): WorkManifest {
+  const { fields, sections, body } = parseIniFrontmatter(raw);
+
   if (!fields.title) {
     throw new Error('Manifest must include a "title" field');
   }
@@ -70,6 +90,6 @@ export function parseWorkManifest(raw: string): WorkManifest {
       return { kind: entry.kind ?? 'link', label: entry.label, url: entry.url };
     });
 
-  const summary = splitParagraphs(raw.slice(match[0].length)).join(' ');
+  const summary = splitParagraphs(body).join(' ');
   return { title: fields.title, date: fields.date, artifacts, summary };
 }

@@ -1,7 +1,10 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
+import path from 'node:path';
+import { parseIniFrontmatter } from './manifest.ts';
+import { splitParagraphs } from './markdown.ts';
 
 export type ResearchItemKind = 'pdf' | 'article';
-export type ResearchCategory = 'publication' | 'preprint' | 'wip';
+export type ResearchCategory = 'publication' | 'preprint' | 'planned';
 
 export interface ResearchItem {
   title: string;
@@ -14,7 +17,10 @@ export interface ResearchItem {
 }
 
 const ORCID_ID = '0009-0004-1292-5980';
-const BIB_PATH = 'public/research/publications/publications.bib';
+// Build inputs live under content/ (compiled, never served). Downloadable
+// PDFs stay under public/research/<category>/ (served as-is by Vite).
+const BIB_PATH = 'content/research/publications.bib';
+const PLANNED_DIR = 'content/research/planned';
 
 // ── EDIT: for a publications.bib entry whose PDF has been dropped into
 // public/research/publications/, map its BibTeX citekey to that filename
@@ -114,6 +120,45 @@ export async function loadBibPublications(): Promise<ResearchItem[]> {
     .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
 }
 
+// ── planned research (authored markdown) ───────────────────────────────
+// Planned/in-progress items are authored as INI-frontmatter markdown under
+// content/research/planned/, same flat `key = value` shape as a work
+// manifest (minus the [artifact.N] sections). `kind = pdf` links a file
+// served from public/research/planned/<href>; `kind = article` links a URL;
+// omit both for a citation with nothing to link to. Body = summary.
+
+export function parsePlannedResearch(raw: string): ResearchItem {
+  const { fields, body } = parseIniFrontmatter(raw);
+  if (!fields.title) {
+    throw new Error('Planned research item must include a "title" field');
+  }
+  const summary = splitParagraphs(body).join(' ');
+  return {
+    title: fields.title,
+    kind: fields.kind === 'pdf' ? 'pdf' : 'article',
+    category: 'planned',
+    href: fields.href || undefined,
+    venue: fields.venue || undefined,
+    date: fields.date || undefined,
+    summary: summary || undefined,
+  };
+}
+
+export async function loadPlannedResearch(): Promise<ResearchItem[]> {
+  let files: string[];
+  try {
+    files = (await readdir(PLANNED_DIR)).filter((file) => file.endsWith('.md'));
+  } catch {
+    return [];
+  }
+  const items = await Promise.all(
+    files.map(async (file) =>
+      parsePlannedResearch(await readFile(path.join(PLANNED_DIR, file), 'utf-8'))
+    )
+  );
+  return items.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
+}
+
 // ── ORCID (supplementary — catches anything not yet in publications.bib)
 // Minimal shape of the bits of ORCID's public works API we use.
 // Full schema: https://info.orcid.org/documentation/api-tutorials/
@@ -195,4 +240,17 @@ export async function generateResearchPublications(): Promise<ResearchItem[]> {
     fetchOrcidPublications(),
   ]);
   return [...bibItems, ...dedupeAgainst(bibItems, orcidItems)];
+}
+
+/**
+ * The full research list rendered by research-page.ts: published items
+ * (publications.bib + ORCID, categories `publication`/`preprint`) followed
+ * by authored planned items (category `planned`).
+ */
+export async function generateResearch(): Promise<ResearchItem[]> {
+  const [published, planned] = await Promise.all([
+    generateResearchPublications(),
+    loadPlannedResearch(),
+  ]);
+  return [...published, ...planned];
 }

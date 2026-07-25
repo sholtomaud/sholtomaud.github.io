@@ -132,16 +132,32 @@ is the local mirror — use it, not `act`.
 3. Include `<site-header></site-header>` at the top of the page's markup
    unless it's `home-page`, which has its own embedded nav instead.
 
+## content/ vs public/ — the split that matters
+
+- **`content/`** is authored source that the build **compiles into JSON**
+  (`src/generated/*.json`) and bundles into the JS — markdown, plus the
+  `publications.bib` build *input*. None of it is served as a file; it
+  becomes data. This is the single source-of-truth tree for everything you
+  write.
+- **`public/`** is **served binaries only** — the downloadable PDFs Vite
+  copies verbatim into `dist/` (`public/research/<publications|preprints|
+  planned>/*.pdf`), fetched by URL at runtime. A PDF is a binary the browser
+  downloads; it *cannot* be compiled into JSON, so it must live here.
+
+Don't put authored text in `public/` (it'd ship to `dist/` uncompiled), and
+don't expect a PDF in `content/` to be served (nothing copies it).
+
 ## Research page / PDFs
 
-`src/components/research-page/research-page.ts` holds a `RESEARCH_ITEMS`
-array, grouped into three sections by `category`: `publication`,
-`preprint`, `wip` (only sections with entries render). Each entry is
-`kind: 'pdf'` (drop the file into `public/research/<publications|
-preprints|wip>/` matching its `category` and reference it by filename —
-Vite copies `public/` as-is, so it resolves to `<BASE_URL>research/
-<category-folder>/<file>`) or `kind: 'article'` (a full external URL,
-opened the same way). Both open in a new tab.
+`research-page.ts` renders `src/generated/research.json` (nothing is
+hardcoded), grouped into three sections by `category`: `publication`,
+`preprint`, `planned` (only sections with entries render; `publication`
+always renders, carrying the Scholar/ORCID links). Each entry is
+`kind: 'pdf'` (a filename served from `public/research/<publications|
+preprints|planned>/` matching its `category` — resolves to
+`<BASE_URL>research/<category-folder>/<file>`) or `kind: 'article'` (a full
+external URL). Both open in a new tab. Publications come from the bib+ORCID
+pipeline below; planned items are authored markdown (also below).
 
 ## Content generation
 
@@ -157,10 +173,10 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   this generated JSON, so no HTML edit is needed to link it in.
 - `content/about/autobio.md` (plain prose, no frontmatter) →
   `src/generated/about.json`, imported by `about-page.ts`.
-- `content/works/<slug>/Manifest.md` — one directory per project (a
-  "project assembly": a manifest plus, potentially, other project-local
-  files later). INI-flavoured frontmatter, not the flat `key: value` the
-  other content types use: `title` (required) and `date` (optional) as
+- `content/works/<slug>.md` — one file per project (add a work by dropping
+  a new `<slug>.md` here; the display title comes from the `title` field,
+  not the filename). INI-flavoured frontmatter, not the flat `key: value`
+  the other content types use: `title` (required) and `date` (optional) as
   plain `key = value` lines, plus zero or more `[artifact.N]` sections
   (`kind`/`label`/`url`), each becoming one entry in a project's
   `artifacts` list — a project can have a GitHub repo *and* a firmware
@@ -170,18 +186,31 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   `dataset`, `conops`, ...); an omitted `kind` defaults to `'link'`. INI
   over nested YAML deliberately — same "list of records" shape, but no
   indentation-sensitive parsing and no YAML dependency (see
-  `scripts/lib/manifest.ts`'s `parseWorkManifest`). Body below the
-  closing `---` is the summary, parsed the same way as everywhere else
-  (`splitParagraphs`). → `src/generated/works.json`, imported by
-  `works-page.ts`. Newest `date` first; a project needs no `date` if
-  ordering doesn't matter.
-- `public/research/publications/publications.bib` + a live call to the
-  ORCID public API → merged, deduped, and written to
-  `src/generated/research.json`, imported by `research-page.ts`. This
-  used to be a live `fetch()` in the browser on every page load; moving
-  it to build time means visitors no longer hit ORCID's API directly.
+  `scripts/lib/manifest.ts`'s `parseIniFrontmatter`/`parseWorkManifest`).
+  Body below the closing `---` is the summary, parsed the same way as
+  everywhere else (`splitParagraphs`). → `src/generated/works.json`,
+  imported by `works-page.ts`. Newest `date` first; a project needs no
+  `date` if ordering doesn't matter. (Works are flat files, not a folder
+  per project — a work that ever needs colocated local assets would be a
+  future special case.)
+- `content/research/planned/<slug>.md` — authored "planned/in-progress"
+  research items, same INI frontmatter as a work manifest but with only
+  flat fields (no `[artifact.N]` sections): `title` (required), plus
+  optional `date`, `venue`, `kind` (`pdf`|`article`, default `article`),
+  and `href`. `kind = pdf` → `href` is a filename served from
+  `public/research/planned/`; `kind = article` → `href` is a URL; omit both
+  for a text-only entry. Body = summary. Parsed by `parsePlannedResearch`
+  (`scripts/lib/research-content.ts`) and folded into `research.json` with
+  `category: 'planned'`.
+- `content/research/publications.bib` + a live call to the ORCID public API
+  → merged, deduped, and written (with the planned items above) to
+  `src/generated/research.json`, imported by `research-page.ts`. The `.bib`
+  is a build input under `content/` (compiled, not served); an absent bib
+  or unreachable ORCID degrades to an empty published list. This used to be
+  a live `fetch()` in the browser on every page load; moving it to build
+  time means visitors no longer hit ORCID's API directly.
 
-All three are produced by `scripts/generate-content.ts` (parsing helpers
+All of these are produced by `scripts/generate-content.ts` (parsing helpers
 live in `scripts/lib/`), run via the `content:generate` npm script, wired
 as a `predev`/`prestart`/`prebuild`/`pretypecheck` hook so
 `src/generated/*.json` always exists before Vite or tsgo needs to resolve
@@ -192,15 +221,17 @@ importing from `src/generated/` needs the same `pre<script>` treatment.
 The `pre*` hooks only run once, at startup, so on their own they wouldn't
 catch edits made to `content/*.md` while `make dev` is already running.
 `vite.config.ts` closes that gap with a small dev-only plugin
-(`watchContentPlugin`) that adds `content/perspectives/` and
-`content/about/bio.md` to Vite's own already-running file watcher and
-calls the matching granular `regeneratePerspectives()`/
-`regenerateAboutBio()` function (exported from `scripts/generate-content.ts`)
-in-process when one changes — no new file-watching dependency, no second
-terminal/container, and no unnecessary ORCID re-fetch when only markdown
-changed (`regenerateResearch()`, the one that hits ORCID, is deliberately
-not wired into this watcher). The plugin only runs for `vite`'s dev
-server (`configureServer`), not `build`/`preview`.
+(`watchContentPlugin`) that adds `content/perspectives/`,
+`content/about/autobio.md`, and `content/works/` to Vite's own
+already-running file watcher and calls the matching granular
+`regeneratePerspectives()`/`regenerateAboutBio()`/`regenerateWorks()`
+function (exported from `scripts/generate-content.ts`) in-process when one
+changes — no new file-watching dependency, no second terminal/container.
+Research (`regenerateResearch()`) is deliberately **not** wired into this
+watcher: it hits the ORCID API, so it stays a startup-only regeneration —
+edits to `content/research/planned/*.md` or `publications.bib` need a
+`make dev` restart to show up. The plugin only runs for `vite`'s dev server
+(`configureServer`), not `build`/`preview`.
 `src/generated/` is gitignored — it's a build artifact, not source of
 truth; don't hand-edit it or commit it. A missing `publications.bib` or
 an unreachable ORCID API degrades to an empty list rather than failing
