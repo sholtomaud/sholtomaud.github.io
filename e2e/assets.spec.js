@@ -1,31 +1,28 @@
 import { test, expect } from '@playwright/test';
 
-test('no absolute asset paths in index.html', async ({ page }) => {
+// The site is served at the domain root, and a deep-link hard refresh boots
+// from the SPA-fallback 404.html at e.g. /research/. For that to work, the
+// built index.html must reference its assets by *root-absolute* path
+// (/assets/…) — a relative ./assets/… resolves against the deep path
+// (/research/assets/…) and 404s, blanking the page. This guards the built
+// output (the 'production' project); the dev server's index.html still points
+// at the raw src/main.ts, which isn't a built asset and is expected to differ.
+test('built index.html references assets by root-absolute path', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'production', 'checks the built dist/ output');
+
   await page.goto('/', { waitUntil: 'networkidle' });
 
-  const { absoluteLinks, absoluteScripts } = await page.evaluate(() => {
-    const links = Array.from(document.querySelectorAll('link[href]'));
-    const absoluteLinks = links
-      .map((link) => link.getAttribute('href'))
-      .filter((href) => href && href.startsWith('/') && !href.startsWith('//'));
-
-    const scripts = Array.from(document.querySelectorAll('script[src]'));
-    const absoluteScripts = scripts
-      .map((script) => script.getAttribute('src'))
-      .filter(
-        (src) =>
-          src &&
-          src.startsWith('/') &&
-          !src.startsWith('//') &&
-          !src.startsWith('/@vite/')
-      );
-
-    return { absoluteLinks, absoluteScripts };
+  const relativeRefs = await page.evaluate(() => {
+    const refs = [
+      ...Array.from(document.querySelectorAll('script[src]'), (el) => el.getAttribute('src')),
+      ...Array.from(document.querySelectorAll('link[href]'), (el) => el.getAttribute('href')),
+    ].filter((u) => u && !/^(https?:|data:|\/\/|#)/.test(u));
+    // Local refs only; every one must be root-absolute (start with '/').
+    return refs.filter((u) => !u.startsWith('/'));
   });
 
-  expect(absoluteLinks, `Found absolute links: ${absoluteLinks}`).toEqual([]);
   expect(
-    absoluteScripts,
-    `Found absolute scripts: ${absoluteScripts}`
+    relativeRefs,
+    `Relative asset refs (must be root-absolute for deep-link refresh): ${relativeRefs}`
   ).toEqual([]);
 });

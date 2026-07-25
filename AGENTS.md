@@ -58,6 +58,13 @@ Apple's `container` CLI doesn't expose (no Docker daemon / `podman` here).
   `src/main.ts` hardcodes `window.BOBA_BASE_URL = '/'`; don't reintroduce
   boba's default project-page path-segment detection, it will break
   routing here.
+- **The build uses `--base /` (root-absolute), not `--base ./`.** Because
+  the site is served at the root and deep links boot from the 404.html
+  fallback (below), assets must be referenced as `/assets/…`. With a
+  relative `./assets/…`, a hard refresh at `/research/` resolves them
+  against the deep path (`/research/assets/…`) and 404s → blank page. This
+  is a *user*-page choice; boba's generic `./` default is for project pages
+  under an unknown `/<repo>/` prefix. Guarded by `e2e/assets.spec.js`.
 - GitHub Pages is a static host with no server-side rewrites, so a hard
   refresh on a deep link (e.g. `/research`) 404s unless `dist/404.html`
   exists. `.github/workflows/deploy.yml` handles this by copying the built
@@ -68,6 +75,10 @@ Apple's `container` CLI doesn't expose (no Docker daemon / `podman` here).
   a loose root-level `404.html` into `dist/` on its own (it only handles
   `index.html` and anything under `public/`), so don't add one expecting
   it to do anything at build time.
+- The router normalizes a trailing slash (`/research/` → `/research`) before
+  matching, since the fallback can boot at either form; see
+  `handleRoute` in `src/core/router/router.ts`. Deep-link refresh is guarded
+  end-to-end by `e2e/deep-link.spec.js`.
 - Routes are registered in `src/main.ts` against the `Router` class in
   `src/core/router/router.ts`.
 
