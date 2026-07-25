@@ -35,6 +35,17 @@ test('About page renders bio content and links out to AI perspectives', async ({
   await expect(page.locator('perspective-page h1')).toContainText('Sholto Maud, according to');
 });
 
+test('unknown route shows the styled 404 page (black on white)', async ({ page }) => {
+  await page.goto('/definitely-not-a-real-page');
+  await expect(page.locator('.route-404 .route-404__code')).toHaveText('404');
+  await expect(page.locator('.route-404 .route-404__home')).toBeVisible();
+  // The 404 is the light inverse of the dark site: white page, black code.
+  const bg = await page
+    .locator('.route-404')
+    .evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(bg).toBe('rgb(255, 255, 255)');
+});
+
 test('site-header nav exposes all four sections on inner pages', async ({ page }) => {
   await page.goto('/research');
   const nav = page.locator('site-header nav a[data-nav]');

@@ -171,12 +171,18 @@ export class Router {
   private show404() {
     const outlet = document.querySelector('#router-outlet');
     if (outlet) {
+      // Deliberately light (white page, black type) — the inverse of the dark
+      // site — with the 404 set in the display face at the home-page name's
+      // size. Styled by `.route-404` in src/styles/global.css. The "Back home"
+      // link is a plain full navigation (no data-nav wiring in the fallback).
       outlet.innerHTML = `
         <div class="route-404">
-          <h1>404</h1>
-          <h2>Page not found</h2>
-          <p>The page you're looking for doesn't exist or has moved.</p>
-          <a href="/" data-nav>Back home</a>
+          <div class="route-404__inner">
+            <h1 class="route-404__code">404</h1>
+            <hr class="route-404__rule" />
+            <p class="route-404__msg">This page doesn't exist or has moved.</p>
+            <a class="route-404__home" href="/">Back home</a>
+          </div>
         </div>
       `;
     }
