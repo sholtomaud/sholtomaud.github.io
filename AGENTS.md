@@ -171,8 +171,13 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   `<slug>.md` file here — `about-page.ts` renders the "Perspectives" list
   (grouped into Human/AI sections, newest first within each) directly from
   this generated JSON, so no HTML edit is needed to link it in.
-- `content/about/autobio.md` (plain prose, no frontmatter) →
-  `src/generated/about.json`, imported by `about-page.ts`.
+- `content/about/autobio.md` → `src/generated/about.json` (shape
+  `{ author?, date?, paragraphs }`), imported by `about-page.ts`.
+  Frontmatter is **optional** (`parseAboutBio`): an `author:`/`date:` block
+  (colon-style, like perspectives) is stripped and surfaced as a byline on
+  the About page; with no frontmatter the whole file is plain prose and no
+  byline renders. Don't leave frontmatter unparsed — plain `splitParagraphs`
+  would render the `---` block as visible text.
 - `content/works/<slug>.md` — one file per project (add a work by dropping
   a new `<slug>.md` here; the display title comes from the `title` field,
   not the filename). INI-flavoured frontmatter, not the flat `key: value`

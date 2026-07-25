@@ -38,6 +38,14 @@
   max-width: 38rem;
 }
 
+.about-bio__byline {
+  font-family: var(--display);
+  font-style: italic;
+  color: var(--faint);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+}
+
 .perspectives__title {
   font-size: 0.7rem;
   letter-spacing: 0.2em;

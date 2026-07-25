@@ -22,6 +22,11 @@ test('About page renders bio content and links out to AI perspectives', async ({
   // rendered, not any particular wording — bio text is expected to change.
   const introText = await page.locator('about-page .page__intro').first().textContent();
   expect(introText?.trim().length).toBeGreaterThan(0);
+  // The frontmatter block must be stripped, not rendered as prose.
+  expect(introText).not.toMatch(/^---/);
+  expect(introText).not.toContain('author:');
+  // The byline (from the bio's author/date frontmatter) renders.
+  await expect(page.locator('about-page .about-bio__byline')).toHaveText(/^—\s*\S/);
 
   await page.click('a[data-nav]:has-text("Claude")');
   await expect(page).toHaveURL(/\/about\/claude$/);

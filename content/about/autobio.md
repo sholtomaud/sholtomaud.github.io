@@ -1,3 +1,8 @@
+---
+author: Sholto Maud
+date: 2026-07-25
+kind: human
+---
 I’m interested in understanding how things work. I tend to learn by building and experimenting: developing a model, running a simulation, writing software, training a model, or constructing a system and seeing what happens. I’m interested in computational techniques that help explain complex behaviour and turn ideas into hypotheses that can be tested, measured, and used to improve outcomes.
 
 My approach to engineering and design science is closely tied to verification and validation. Code, models, and simulations are not just things to be built; they are ways of expressing hypotheses that can be tested, verified, validated, and attested against evidence. I’m particularly interested in methods such as computational modelling, machine learning, PINNs, control systems, and AI that allow systems to be explored, tested, and explained, with the goal of turning technical ideas into measurable impact.
