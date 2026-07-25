@@ -18,7 +18,7 @@ test('About page renders bio content and links out to AI perspectives', async ({
   await page.goto('/about');
   await expect(page.locator('about-page h1')).toHaveText('About');
 
-  // Content-agnostic: just confirms content/about/bio.md was picked up and
+  // Content-agnostic: just confirms content/about/autobio.md was picked up and
   // rendered, not any particular wording — bio text is expected to change.
   const introText = await page.locator('about-page .page__intro').first().textContent();
   expect(introText?.trim().length).toBeGreaterThan(0);
@@ -46,12 +46,28 @@ test('client-side navigation to Works lists at least one project', async ({ page
   await expect(page.locator('works-page .work-item__title').first()).toBeVisible();
 });
 
-test('Contact page fills in the email link at runtime', async ({ page }) => {
+test('Contact page reveals the email only on interaction', async ({ page }) => {
   await page.goto('/contact');
   const emailLink = page.locator('contact-page #email-link');
-  const text = await emailLink.textContent();
-  // Content-agnostic: checks the assembled address is well-formed and that
-  // href/text agree, without pinning the specific address, which may change.
+  const emailLabel = page.locator('contact-page #email-link .page__link-label');
+
+  // Before any interaction the address must not be in the DOM at all — the
+  // link shows only its placeholder and doesn't point at a mailto: yet. This
+  // is the anti-harvesting guarantee: a page-loading scraper sees nothing.
+  await expect(emailLabel).toHaveText('Email');
+  await expect(emailLink).toHaveAttribute('href', '#');
+  // No harvestable mailto: anywhere in the rendered markup before interaction.
+  // (Checking for a literal '@' would be fragile — the component injects its
+  // CSS into a <style> block in this same markup, and an @media rule would
+  // trip it; 'mailto:' is the artifact that actually matters here.)
+  const markupBefore = await page.locator('contact-page').innerHTML();
+  expect(markupBefore).not.toContain('mailto:');
+
+  // Focusing the link (keyboard tab) reveals it. Content-agnostic: checks the
+  // assembled address is well-formed and that href/text agree, without pinning
+  // the specific address, which may change.
+  await emailLink.focus();
+  const text = await emailLabel.textContent();
   expect(text).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
   await expect(emailLink).toHaveAttribute('href', `mailto:${text}`);
 });
