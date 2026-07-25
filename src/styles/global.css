@@ -29,6 +29,23 @@ body {
   min-height: 100dvh;
 }
 
+/* Inline links inside content summaries (rendered by renderInlineMarkdown).
+   Matches the site's link treatment — tinted, underlined with a hairline
+   border rather than the default text-decoration — so a `[text](url)` in a
+   summary reads like every other link on the page. */
+.inline-link {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.inline-link:hover,
+.inline-link:focus-visible {
+  color: var(--link-hover);
+  border-color: var(--link-hover);
+}
+
 /* ── 404 ─────────────────────────────────────────────────────────
    A deliberately light page — the inverse of the dark site — as poised
    as the home card: the code set in the display face at the same size as

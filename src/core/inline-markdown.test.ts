@@ -15,14 +15,14 @@ describe('renderInlineMarkdown', () => {
   test('converts [text](https url) into an external link', () => {
     assert.strictEqual(
       renderInlineMarkdown('See [the paper](https://doi.org/10.1/x) now.'),
-      'See <a href="https://doi.org/10.1/x" target="_blank" rel="noopener noreferrer">the paper</a> now.'
+      'See <a class="inline-link" href="https://doi.org/10.1/x" target="_blank" rel="noopener noreferrer">the paper</a> now.'
     );
   });
 
   test('escapes surrounding text and the link text', () => {
     assert.strictEqual(
       renderInlineMarkdown('a < b [x & y](https://e.com) > c'),
-      'a &lt; b <a href="https://e.com" target="_blank" rel="noopener noreferrer">x &amp; y</a> &gt; c'
+      'a &lt; b <a class="inline-link" href="https://e.com" target="_blank" rel="noopener noreferrer">x &amp; y</a> &gt; c'
     );
   });
 
@@ -40,8 +40,8 @@ describe('renderInlineMarkdown', () => {
   test('handles multiple links in one string', () => {
     assert.strictEqual(
       renderInlineMarkdown('[a](https://a.com) and [b](https://b.com)'),
-      '<a href="https://a.com" target="_blank" rel="noopener noreferrer">a</a> and ' +
-        '<a href="https://b.com" target="_blank" rel="noopener noreferrer">b</a>'
+      '<a class="inline-link" href="https://a.com" target="_blank" rel="noopener noreferrer">a</a> and ' +
+        '<a class="inline-link" href="https://b.com" target="_blank" rel="noopener noreferrer">b</a>'
     );
   });
 });
