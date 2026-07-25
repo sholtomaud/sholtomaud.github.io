@@ -25,6 +25,6 @@ export function renderInlineMarkdown(raw: string): string {
   return escapeHtml(raw).replace(
     INLINE_LINK_RE,
     (_match, text, url) =>
-      `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`
+      `<a class="inline-link" href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`
   );
 }
