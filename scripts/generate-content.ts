@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseFrontmatterMarkdown, parseParagraphs, type Perspective } from './lib/markdown.ts';
 import { parseWorkManifest } from './lib/manifest.ts';
-import { generateResearchPublications } from './lib/research-content.ts';
+import { generateResearch } from './lib/research-content.ts';
 
 export const PERSPECTIVES_DIR = 'content/perspectives';
 export const ABOUT_BIO_PATH = 'content/about/autobio.md';
@@ -39,22 +39,18 @@ export async function regenerateAboutBio(): Promise<void> {
 }
 
 export async function regenerateResearch(): Promise<void> {
-  const research = await generateResearchPublications();
+  const research = await generateResearch();
   await writeJson('research.json', research);
   console.log(`[generate-content] Wrote ${OUTPUT_DIR}/research.json (${research.length} items)`);
 }
 
 export async function regenerateWorks(): Promise<void> {
-  const entries = await readdir(WORKS_DIR, { withFileTypes: true });
-  const projectDirs = entries
-    .filter((entry) => entry.isDirectory())
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const files = (await readdir(WORKS_DIR))
+    .filter((file) => file.endsWith('.md'))
+    .sort((a, b) => a.localeCompare(b));
 
   const works = await Promise.all(
-    projectDirs.map(async (dir) => {
-      const raw = await readFile(path.join(WORKS_DIR, dir.name, 'Manifest.md'), 'utf-8');
-      return parseWorkManifest(raw);
-    })
+    files.map(async (file) => parseWorkManifest(await readFile(path.join(WORKS_DIR, file), 'utf-8')))
   );
   works.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
   await writeJson('works.json', works);

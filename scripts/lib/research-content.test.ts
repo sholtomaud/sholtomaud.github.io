@@ -7,6 +7,7 @@ import {
   bibEntryToResearchItem,
   orcidWorkToResearchItem,
   dedupeAgainst,
+  parsePlannedResearch,
   type ResearchItem,
 } from './research-content.ts';
 
@@ -164,5 +165,51 @@ describe('dedupeAgainst', () => {
       { title: 'No link', kind: 'article', category: 'publication' },
     ];
     assert.deepStrictEqual(dedupeAgainst([], incoming), incoming);
+  });
+});
+
+describe('parsePlannedResearch', () => {
+  test('parses a pdf item with all fields and category planned', () => {
+    const item = parsePlannedResearch(
+      [
+        '---',
+        'title = Preface',
+        'venue = PhD thesis (draft)',
+        'date = 2026',
+        'kind = pdf',
+        'href = preface.pdf',
+        '---',
+        'A draft preface.',
+        '',
+        'Second paragraph.',
+      ].join('\n')
+    );
+    assert.deepStrictEqual(item, {
+      title: 'Preface',
+      kind: 'pdf',
+      category: 'planned',
+      href: 'preface.pdf',
+      venue: 'PhD thesis (draft)',
+      date: '2026',
+      summary: 'A draft preface. Second paragraph.',
+    });
+  });
+
+  test('defaults kind to article and leaves optional fields undefined', () => {
+    const item = parsePlannedResearch('---\ntitle = Some Article\n---\n');
+    assert.strictEqual(item.kind, 'article');
+    assert.strictEqual(item.category, 'planned');
+    assert.strictEqual(item.href, undefined);
+    assert.strictEqual(item.venue, undefined);
+    assert.strictEqual(item.date, undefined);
+    assert.strictEqual(item.summary, undefined);
+  });
+
+  test('throws when title is missing', () => {
+    assert.throws(() => parsePlannedResearch('---\ndate = 2026\n---\nBody.'), /title/);
+  });
+
+  test('throws when the frontmatter block is missing', () => {
+    assert.throws(() => parsePlannedResearch('no frontmatter here'), /frontmatter/);
   });
 });

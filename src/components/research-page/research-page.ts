@@ -23,10 +23,12 @@ interface ResearchItem {
   summary?: string;
 }
 
-// Publications pulled from publications.bib and ORCID, merged and deduped
-// at build time by `npm run content:generate` (see scripts/generate-content.ts)
-// — this is the same shape as `ResearchItem` above.
-const PUBLICATION_ITEMS: ResearchItem[] = researchData as ResearchItem[];
+// The full research list, built at build time by `npm run content:generate`
+// (see scripts/generate-content.ts): published items from publications.bib +
+// ORCID (categories 'publication'/'preprint') plus authored planned items
+// from content/research/planned/*.md (category 'planned'). Same shape as
+// `ResearchItem` above. Sections below just filter this by `category`.
+const RESEARCH_ITEMS: ResearchItem[] = researchData as ResearchItem[];
 
 const CATEGORY_ORDER: {
   key: ResearchCategory;
@@ -42,28 +44,6 @@ const CATEGORY_FOLDER: Record<ResearchCategory, string> =
   Object.fromEntries(
     CATEGORY_ORDER.map(({ key, folder }) => [key, folder])
   ) as Record<ResearchCategory, string>;
-
-// ── EDIT: add your papers/articles here. `kind: 'pdf'` expects a filename
-// dropped into the matching public/research/<publications|preprints|planned>/
-// folder for its `category` (served at BASE_URL +
-// 'research/<category>/<file>' on GitHub Pages); `kind: 'article'` expects
-// a full external URL. `category` also controls which section
-// (Publications / Preprints / Works in Progress) an entry lands in.
-// Publications are normally pulled live from publications.bib and ORCID
-// (below) — only add a 'publication' entry here to feature something
-// specific alongside them.
-const RESEARCH_ITEMS: ResearchItem[] = [
-  {
-    title: 'Preface',
-    kind: 'pdf',
-    category: 'planned',
-    href: 'preface.pdf',
-    venue: 'PhD thesis — Principle-Based Design (draft)',
-    date: '2026',
-    summary:
-      'Draft preface introducing Principle-Based Design: translating H.T. Odum’s systems-ecology concept of Feedback Design into Rhino3D/Grasshopper, via the Noria water wheel as a case study.',
-  },
-];
 
 const ORCID_ID = '0009-0004-1292-5980';
 const ORCID_PROFILE_URL = `https://orcid.org/${ORCID_ID}`;
@@ -160,11 +140,12 @@ export class ResearchPageComponent extends BaseComponent {
     if (!container) return;
 
     container.innerHTML = CATEGORY_ORDER.map(({ key, label }) => {
-      if (key === 'publication') {
-        const manualItems = RESEARCH_ITEMS.filter((item) => item.category === 'publication');
-        return renderPublicationsSection(label, [...manualItems, ...PUBLICATION_ITEMS]);
-      }
       const items = RESEARCH_ITEMS.filter((item) => item.category === key);
+      // Publications always renders (it carries the Scholar/ORCID links and
+      // its own empty-state); other sections appear only when non-empty.
+      if (key === 'publication') {
+        return renderPublicationsSection(label, items);
+      }
       return items.length > 0 ? renderSection(label, items) : '';
     }).join('');
   }

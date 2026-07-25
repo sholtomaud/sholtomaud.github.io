@@ -37,7 +37,7 @@ src/
 ├── components/              # One folder per page/component
 │   ├── home-page/            # Landing card — the site's only page with its own embedded nav
 │   ├── site-header/           # Shared nav, used by every other page
-│   ├── research-page/         # Publications / Preprints / Works in Progress, PDF + external-link entries
+│   ├── research-page/         # Publications / Preprints / Planned, PDF + external-link entries
 │   ├── works-page/
 │   ├── contact-page/
 │   ├── about-page/             # Short bio + links out to AI "Perspectives"
@@ -60,25 +60,36 @@ src/
 
 ## Adding research entries / PDFs
 
-Edit the `RESEARCH_ITEMS` array in
-`src/components/research-page/research-page.ts`:
+The research list is generated at build time — nothing is hardcoded in the
+component.
 
-- `category` — `'publication'`, `'preprint'`, or `'wip'`; controls both
-  which section of the page it lands in (empty sections don't render) and
-  which `public/research/` subfolder it's served from.
-- `kind: 'pdf'` — drop the file into `public/research/publications/`,
-  `public/research/preprints/`, or `public/research/wip/` to match its
-  `category`, and set `href` to just the filename (e.g.
-  `href: 'my-paper.pdf'`). A `wip` entry with `href: 'preface.pdf'` is
-  served at `/research/wip/preface.pdf`.
-- `kind: 'article'` — set `href` to the full external URL.
+- **Published work** is pulled from your ORCID profile and (optionally)
+  `content/research/publications.bib`, merged and deduped. Add a paper to
+  ORCID (or the `.bib`) and it shows up; no code change.
+- **Planned / in-progress** items are authored as markdown — drop a
+  `content/research/planned/<slug>.md` with INI frontmatter:
+
+  ```
+  ---
+  title = My Draft
+  date = 2026
+  kind = pdf            # or 'article', or omit for a text-only entry
+  href = my-draft.pdf   # pdf: a filename; article: a full URL
+  ---
+  One-paragraph summary.
+  ```
+
+  For a `pdf` item, drop the file into `public/research/planned/` (served
+  at `/research/planned/<file>`). `public/` holds only these served
+  binaries; everything you author lives under `content/`. See
+  [AGENTS.md](AGENTS.md) for the full content pipeline.
 
 Both link kinds open in a new tab.
 
 ## CI/CD
 
-- `.github/workflows/ci.yml` runs on every push/PR to `main`: typecheck
-  (`tsgo`), unit tests, Playwright e2e.
+- `.github/workflows/ci.yml` runs on PRs to `main` (and manual dispatch):
+  typecheck (`tsgo`), unit tests, Playwright e2e.
 - `.github/workflows/deploy.yml` runs the same checks, builds, and deploys
   to GitHub Pages via `actions/deploy-pages` — no `gh-pages` branch. This
   needs the repo's **Settings → Pages → Build and deployment** source set
