@@ -43,11 +43,11 @@ test('every local PDF link on the site resolves (no 404s)', async ({ page, reque
     }
   }
 
-  // Guard against a silent pass: if a rendering regression drops the PDF links
-  // entirely we'd check nothing and still go green. The site is expected to
-  // link at least one local PDF (the research preface).
-  expect(pdfUrls.size, 'expected at least one local PDF link to be rendered').toBeGreaterThan(0);
-
+  // Zero local PDFs is a legitimate state — planned/research items are
+  // authored markdown and may link nothing, a PDF, or an external article.
+  // So we don't require any to exist; we only assert that whatever PDF links
+  // the site *does* render actually resolve. (Research-page rendering itself
+  // is covered by the smoke and deep-link specs.)
   const broken = [];
   for (const url of pdfUrls) {
     const response = await request.get(url);

@@ -14,7 +14,7 @@
     "pretypecheck": "npm run content:generate",
     "start": "vite --host",
     "dev": "vite --host",
-    "build": "vite build --base ./",
+    "build": "vite build --base /",
     "test": "node --test src/**/*.test.ts scripts/**/*.test.ts",
     "e2e": "npx playwright test",
     "typecheck": "tsgo --noEmit"

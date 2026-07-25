@@ -90,7 +90,13 @@ export class Router {
 
   private async handleRoute() {
     const appPathToMatch = this.getAppPath();
-    const [pathPart, queryString] = appPathToMatch.split('?');
+    const [rawPathPart, queryString] = appPathToMatch.split('?');
+
+    // Normalize a trailing slash (except the root) so a deep-link hard refresh
+    // — e.g. GitHub Pages serving the SPA-fallback 404.html at `/research/` —
+    // still matches the `/research` route instead of falling through to 404.
+    const pathPart =
+      rawPathPart.length > 1 ? rawPathPart.replace(/\/+$/, '') || '/' : rawPathPart;
 
     const searchParams = new URLSearchParams(queryString || '');
     const query = Object.fromEntries(searchParams.entries());
