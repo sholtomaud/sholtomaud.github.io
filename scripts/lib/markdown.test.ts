@@ -1,6 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert';
-import { parseFrontmatterMarkdown, parseParagraphs } from './markdown.ts';
+import { parseFrontmatterMarkdown, parseParagraphs, parseAboutBio } from './markdown.ts';
 
 describe('parseFrontmatterMarkdown', () => {
   test('parses frontmatter fields and blank-line-separated paragraphs', () => {
@@ -88,5 +88,38 @@ describe('parseParagraphs', () => {
 
   test('drops blank paragraphs from extra surrounding whitespace', () => {
     assert.deepStrictEqual(parseParagraphs('\n\nOnly paragraph.\n\n'), ['Only paragraph.']);
+  });
+});
+
+describe('parseAboutBio', () => {
+  test('strips frontmatter and surfaces author/date as metadata', () => {
+    const raw = [
+      '---',
+      'author: Sholto Maud',
+      'date: 2026-07-25',
+      'kind: human',
+      '---',
+      'First paragraph.',
+      '',
+      'Second paragraph.',
+    ].join('\n');
+    assert.deepStrictEqual(parseAboutBio(raw), {
+      author: 'Sholto Maud',
+      date: '2026-07-25',
+      paragraphs: ['First paragraph.', 'Second paragraph.'],
+    });
+  });
+
+  test('the frontmatter never leaks into the paragraphs', () => {
+    const bio = parseAboutBio('---\nauthor: X\ndate: 2026\nkind: human\n---\nProse only.');
+    assert.deepStrictEqual(bio.paragraphs, ['Prose only.']);
+    assert.ok(!bio.paragraphs.some((p) => p.includes('author:')));
+  });
+
+  test('treats a frontmatter-less file as plain prose with no byline', () => {
+    const bio = parseAboutBio('Just prose.\n\nMore prose.');
+    assert.strictEqual(bio.author, undefined);
+    assert.strictEqual(bio.date, undefined);
+    assert.deepStrictEqual(bio.paragraphs, ['Just prose.', 'More prose.']);
   });
 });

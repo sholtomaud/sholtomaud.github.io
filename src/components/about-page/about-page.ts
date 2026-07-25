@@ -3,10 +3,16 @@ import { BaseComponent } from '../../core/base-component.ts';
 import '../site-header/site-header.ts';
 import template from './about-page.html?raw';
 import style from './about-page.css?raw';
-import bioParagraphs from '../../generated/about.json' with { type: 'json' };
+import aboutBio from '../../generated/about.json' with { type: 'json' };
 import perspectivesData from '../../generated/perspectives.json' with { type: 'json' };
 
 type PerspectiveKind = 'ai' | 'human';
+
+interface AboutBio {
+  author?: string;
+  date?: string;
+  paragraphs: string[];
+}
 
 interface Perspective {
   author: string;
@@ -70,12 +76,23 @@ export class AboutPageComponent extends BaseComponent {
 
     const intro = this.querySelector('#about-intro');
     if (intro) {
-      (bioParagraphs as string[]).forEach((text) => {
+      const bio = aboutBio as AboutBio;
+      bio.paragraphs.forEach((text) => {
         const p = document.createElement('p');
         p.className = 'page__intro';
         p.textContent = text;
         intro.appendChild(p);
       });
+
+      // Byline from the bio's frontmatter (author, optional year). Rendered
+      // only when an author is present — a frontmatter-less bio shows none.
+      if (bio.author) {
+        const year = bio.date?.match(/\d{4}/)?.[0];
+        const byline = document.createElement('p');
+        byline.className = 'about-bio__byline';
+        byline.textContent = year ? `— ${bio.author}, ${year}` : `— ${bio.author}`;
+        intro.appendChild(byline);
+      }
     }
 
     // Runs after the dynamic content above so it also wires up the

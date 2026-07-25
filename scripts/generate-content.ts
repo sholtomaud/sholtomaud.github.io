@@ -1,7 +1,7 @@
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseFrontmatterMarkdown, parseParagraphs, type Perspective } from './lib/markdown.ts';
+import { parseFrontmatterMarkdown, parseAboutBio, type Perspective } from './lib/markdown.ts';
 import { parseWorkManifest } from './lib/manifest.ts';
 import { generateResearch } from './lib/research-content.ts';
 
@@ -33,9 +33,11 @@ export async function regeneratePerspectives(): Promise<void> {
 
 export async function regenerateAboutBio(): Promise<void> {
   const raw = await readFile(ABOUT_BIO_PATH, 'utf-8');
-  const aboutBio = parseParagraphs(raw);
+  const aboutBio = parseAboutBio(raw);
   await writeJson('about.json', aboutBio);
-  console.log(`[generate-content] Wrote ${OUTPUT_DIR}/about.json (${aboutBio.length} paragraphs)`);
+  console.log(
+    `[generate-content] Wrote ${OUTPUT_DIR}/about.json (${aboutBio.paragraphs.length} paragraphs)`
+  );
 }
 
 export async function regenerateResearch(): Promise<void> {
