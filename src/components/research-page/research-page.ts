@@ -3,6 +3,7 @@ import '../site-header/site-header.ts';
 import template from './research-page.html?raw';
 import style from './research-page.css?raw';
 import researchData from '../../generated/research.json' with { type: 'json' };
+import { escapeHtml, renderInlineMarkdown } from '../../core/inline-markdown.ts';
 
 type ResearchItemKind = 'pdf' | 'article';
 type ResearchCategory = 'publication' | 'preprint' | 'planned';
@@ -50,14 +51,6 @@ const ORCID_PROFILE_URL = `https://orcid.org/${ORCID_ID}`;
 const SCHOLAR_URL =
   'https://scholar.google.com/citations?hl=en&user=Ltw1_fYAAAAJ&view_op=list_works&sortby=pubdate&inst=7289110936595769722';
 
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 // ── rendering ───────────────────────────────────────────────────────────
 
 function resolveHref(item: ResearchItem): string | undefined {
@@ -77,7 +70,7 @@ function renderItem(item: ResearchItem): string {
       ${href ? `<span class="research-item__kind">${item.kind === 'pdf' ? 'PDF' : 'Article'}</span>` : ''}
     </div>
     ${meta ? `<div class="research-item__meta">${escapeHtml(meta)}</div>` : ''}
-    ${item.summary ? `<p class="research-item__summary">${escapeHtml(item.summary)}</p>` : ''}
+    ${item.summary ? `<p class="research-item__summary">${renderInlineMarkdown(item.summary)}</p>` : ''}
   `;
 
   if (!href) {
