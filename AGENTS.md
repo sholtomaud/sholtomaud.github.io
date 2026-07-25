@@ -16,7 +16,7 @@ project structure and how to add content.
   enforces this at typecheck time): no `enum`, no constructor
   parameter-property shorthand, no `namespace`.
 - Vite is used for the dev server (HMR) and production bundling
-  (`npm run build` = `vite build --base ./`), not because the language
+  (`npm run build` = `vite build --base /`), not because the language
   needs transpiling. `vite.config.ts` exists for two dev-only things: the
   content-watching plugin described under "Content generation" below, and
   `server.watch.usePolling: true` — dev always runs inside a container
@@ -137,7 +137,7 @@ is the local mirror — use it, not `act`.
 ## Adding a page
 
 1. New folder under `src/components/<name>-page/` with `.html`/`.css`/`.ts`,
-   following the existing pages (e.g. `works-page`). Use kebab-case for the
+   following the existing pages (e.g. `projects-page`). Use kebab-case for the
    custom element tag name.
 2. Register the route in `src/main.ts`.
 3. Include `<site-header></site-header>` at the top of the page's markup
@@ -189,7 +189,7 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   the About page; with no frontmatter the whole file is plain prose and no
   byline renders. Don't leave frontmatter unparsed — plain `splitParagraphs`
   would render the `---` block as visible text.
-- `content/works/<slug>.md` — one file per project (add a work by dropping
+- `content/projects/<slug>.md` — one file per project (add one by dropping
   a new `<slug>.md` here; the display title comes from the `title` field,
   not the filename). INI-flavoured frontmatter, not the flat `key: value`
   the other content types use: `title` (required) and `date` (optional) as
@@ -204,10 +204,10 @@ time, rather than hardcoded in `.ts` files or fetched live in the browser:
   indentation-sensitive parsing and no YAML dependency (see
   `scripts/lib/manifest.ts`'s `parseIniFrontmatter`/`parseWorkManifest`).
   Body below the closing `---` is the summary, parsed the same way as
-  everywhere else (`splitParagraphs`). → `src/generated/works.json`,
-  imported by `works-page.ts`. Newest `date` first; a project needs no
-  `date` if ordering doesn't matter. (Works are flat files, not a folder
-  per project — a work that ever needs colocated local assets would be a
+  everywhere else (`splitParagraphs`). → `src/generated/projects.json`,
+  imported by `projects-page.ts`. Newest `date` first; a project needs no
+  `date` if ordering doesn't matter. (Projects are flat files, not a folder
+  per project — one that ever needs colocated local assets would be a
   future special case.)
 - `content/research/planned/<slug>.md` — authored "planned/in-progress"
   research items, same INI frontmatter as a work manifest but with only
@@ -238,9 +238,9 @@ The `pre*` hooks only run once, at startup, so on their own they wouldn't
 catch edits made to `content/*.md` while `make dev` is already running.
 `vite.config.ts` closes that gap with a small dev-only plugin
 (`watchContentPlugin`) that adds `content/perspectives/`,
-`content/about/autobio.md`, and `content/works/` to Vite's own
+`content/about/autobio.md`, and `content/projects/` to Vite's own
 already-running file watcher and calls the matching granular
-`regeneratePerspectives()`/`regenerateAboutBio()`/`regenerateWorks()`
+`regeneratePerspectives()`/`regenerateAboutBio()`/`regenerateProjects()`
 function (exported from `scripts/generate-content.ts`) in-process when one
 changes — no new file-watching dependency, no second terminal/container.
 Research (`regenerateResearch()`) is deliberately **not** wired into this

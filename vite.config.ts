@@ -3,10 +3,10 @@ import path from 'node:path';
 import {
   PERSPECTIVES_DIR,
   ABOUT_BIO_PATH,
-  WORKS_DIR,
+  PROJECTS_DIR,
   regeneratePerspectives,
   regenerateAboutBio,
-  regenerateWorks,
+  regenerateProjects,
 } from './scripts/generate-content.ts';
 
 const DEBOUNCE_MS = 200;
@@ -23,9 +23,9 @@ const WATCHED_SOURCES = [
     regenerate: regenerateAboutBio,
   },
   {
-    watchPath: WORKS_DIR,
-    isMatch: (file: string) => file.includes(`/${WORKS_DIR}/`),
-    regenerate: regenerateWorks,
+    watchPath: PROJECTS_DIR,
+    isMatch: (file: string) => file.includes(`/${PROJECTS_DIR}/`),
+    regenerate: regenerateProjects,
   },
 ];
 
