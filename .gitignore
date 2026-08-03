@@ -6,3 +6,6 @@ playwright-report/
 test-results/
 *.log
 .DS_Store
+
+# Local project-tracking link — machine-specific, not shared config
+.crux/
