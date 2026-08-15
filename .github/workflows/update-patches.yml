@@ -1,0 +1,57 @@
+name: Update Patch Dependencies
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-patches:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.61.1-noble
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js v25
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25.x
+          cache: 'npm'
+
+      - name: Update patch dependencies and devDependencies
+        run: |
+          npx npm-check-updates --target patch -u
+          npm update
+
+      - name: Typecheck (tsgo)
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Unit Tests
+        run: npm test
+
+      - name: E2E Tests
+        run: npx playwright test
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(deps): update npm patch dependencies'
+          branch: 'automation/patch-dependencies'
+          title: 'chore(deps): update npm patch dependencies'
+          body: |
+            Automated patch dependency update.
+
+            All checks (typecheck, build, unit tests, e2e tests) have passed.
+          labels: |
+            dependencies
+            automated
