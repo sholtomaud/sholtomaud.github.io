@@ -42,16 +42,37 @@ jobs:
         run: npx playwright test
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'chore(deps): update npm patch dependencies'
-          branch: 'automation/patch-dependencies'
-          title: 'chore(deps): update npm patch dependencies'
-          body: |
-            Automated patch dependency update.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit."
+            exit 0
+          fi
 
-            All checks (typecheck, build, unit tests, e2e tests) have passed.
-          labels: |
-            dependencies
-            automated
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH_NAME="automation/patch-dependencies"
+          git checkout -B "$BRANCH_NAME"
+          git add -A
+          git commit -m "chore(deps): update npm patch dependencies"
+          git push origin "$BRANCH_NAME" --force
+
+          BODY="Automated patch dependency update.
+
+          All checks (typecheck, build, unit tests, e2e tests) have passed."
+
+          if gh pr view "$BRANCH_NAME" >/dev/null 2>&1; then
+            gh pr edit "$BRANCH_NAME" \
+              --title "chore(deps): update npm patch dependencies" \
+              --body "$BODY"
+          else
+            gh pr create \
+              --title "chore(deps): update npm patch dependencies" \
+              --body "$BODY" \
+              --head "$BRANCH_NAME" \
+              --base "main" \
+              --label "dependencies" \
+              --label "automated"
+          fi
