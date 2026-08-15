@@ -99,6 +99,12 @@ Apple's `container` CLI doesn't expose (no Docker daemon / `podman` here).
 - Both jobs run inside the `mcr.microsoft.com/playwright:v1.61.1-noble`
   container image, matching the `@playwright/test` version pinned in
   `package.json`; bump both together.
+- `.github/workflows/update-patches.yml` — scheduled weekly workflow
+  (Mondays at 04:00 UTC, plus `workflow_dispatch`) that upgrades all npm
+  dependencies and devDependencies to their latest patch versions using `npx
+  npm-check-updates --target patch -u` and `npm update`. Runs the full test
+  suite (`typecheck`, `build`, `test`, `e2e`) and opens a PR via
+  `peter-evans/create-pull-request` if updates are available and tests pass.
 
 ### Repo settings (not in the tree — record here so they aren't rediscovered)
 
