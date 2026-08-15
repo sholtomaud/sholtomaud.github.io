@@ -25,3 +25,16 @@ test('no module script load failures', async ({ page }) => {
     `Found module loading errors: ${moduleErrors.join(', ')}`
   ).toEqual([]);
 });
+
+test('Google Analytics script tag and globals are present', async ({ page }) => {
+  await page.goto('/');
+
+  const gaScript = page.locator('script[src*="googletagmanager.com/gtag/js?id=G-ZLGDVM28SH"]');
+  await expect(gaScript).toBeAttached();
+
+  const isDataLayerArray = await page.evaluate(() => Array.isArray(window.dataLayer));
+  expect(isDataLayerArray).toBe(true);
+
+  const isGtagFunction = await page.evaluate(() => typeof window.gtag === 'function');
+  expect(isGtagFunction).toBe(true);
+});
