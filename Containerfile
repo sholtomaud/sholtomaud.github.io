@@ -1,4 +1,5 @@
 ARG NODE_VERSION=25
+ARG PLAYWRIGHT_VERSION=1.63.0
 FROM node:${NODE_VERSION}-slim
 
 WORKDIR /app
@@ -9,7 +10,7 @@ ENV NODE_OPTIONS=--max-old-space-size=3072
 
 # Install Playwright system dependencies and Chromium browser
 RUN apt-get update && \
-    npx -y playwright@1.61.1 install chromium --with-deps && \
+    npx -y playwright@${PLAYWRIGHT_VERSION} install chromium --with-deps && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
