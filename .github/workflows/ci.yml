@@ -6,9 +6,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  playwright-version:
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.61.1-noble
+    outputs:
+      version: ${{ steps.read-version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Read Playwright version
+        id: read-version
+        run: echo "version=$(cat .playwright-version)" >> "$GITHUB_OUTPUT"
+
+  test:
+    needs: playwright-version
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v${{ needs.playwright-version.outputs.version }}-noble
 
     steps:
       - name: Checkout code

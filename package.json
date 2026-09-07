@@ -17,13 +17,14 @@
     "build": "vite build --base /",
     "test": "node --test src/**/*.test.ts scripts/**/*.test.ts",
     "e2e": "npx playwright test",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsgo --noEmit",
+    "sync:playwright": "node scripts/sync-playwright-version.ts"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^26.1.1",
     "@typescript/native-preview": "^7.0.0-dev.20260707.2",
-    "playwright": "^1.61.1",
+    "playwright": "^1.63.0",
     "typescript": "^7.0.2",
     "vite": "^8.1.4"
   }

@@ -1,6 +1,7 @@
 IMAGE_APP        := sholtomaud.github.io
 CONTAINER_BIN    := container
 NODE_VERSION     := $(shell cat .node-version)
+PLAYWRIGHT_VERSION := $(shell cat .playwright-version)
 WORKDIR          := /app
 
 .PHONY: start image install dev build-app typecheck test-unit test test-ci ci clean
@@ -16,8 +17,8 @@ start: ## Start the Apple container system daemon
 # Container image
 # --------------------------------------------------
 
-image: start ## Build dev container image (node:$(NODE_VERSION)-slim)
-	$(CONTAINER_BIN) build -f Containerfile -t $(IMAGE_APP) --build-arg NODE_VERSION=$(NODE_VERSION) .
+image: start ## Build dev container image (node:$(NODE_VERSION)-slim, playwright:$(PLAYWRIGHT_VERSION))
+	$(CONTAINER_BIN) build -f Containerfile -t $(IMAGE_APP) --build-arg NODE_VERSION=$(NODE_VERSION) --build-arg PLAYWRIGHT_VERSION=$(PLAYWRIGHT_VERSION) .
 
 # --------------------------------------------------
 # Compilation and serving targets

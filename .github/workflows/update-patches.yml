@@ -10,9 +10,22 @@ permissions:
   pull-requests: write
 
 jobs:
-  update-patches:
+  playwright-version:
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.62.1-noble
+    outputs:
+      version: ${{ steps.read-version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Read Playwright version
+        id: read-version
+        run: echo "version=$(cat .playwright-version)" >> "$GITHUB_OUTPUT"
+
+  update-patches:
+    needs: playwright-version
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v${{ needs.playwright-version.outputs.version }}-noble
 
     steps:
       - name: Checkout code
@@ -28,6 +41,7 @@ jobs:
         run: |
           npx npm-check-updates --target patch -u
           npm update
+          node scripts/sync-playwright-version.ts --from-package
 
       - name: Typecheck (tsgo)
         run: npm run typecheck
