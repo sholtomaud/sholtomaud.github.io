@@ -2,7 +2,7 @@ name: Update Patch Dependencies
 
 on:
   schedule:
-    - cron: '0 4 * * 1'
+    - cron: '0 0 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -41,7 +41,11 @@ jobs:
         run: |
           npx npm-check-updates --target patch -u
           npm update
-          node scripts/sync-playwright-version.ts --from-package
+          npm run sync:playwright -- --from-package
+          npx playwright install chromium
+
+      - name: Check Playwright version sync
+        run: npm run sync:playwright -- --check
 
       - name: Typecheck (tsgo)
         run: npm run typecheck
