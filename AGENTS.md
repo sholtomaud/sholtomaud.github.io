@@ -101,12 +101,11 @@ Apple's `container` CLI doesn't expose (no Docker daemon / `podman` here).
   the single source of truth for the Playwright version alongside `package.json`'s
   `@playwright/test` dependency.
 - `.github/workflows/update-patches.yml` — scheduled weekly workflow
-  (Mondays at 04:00 UTC, plus `workflow_dispatch`) that upgrades all npm
+  (Mondays at 00:00 UTC, plus `workflow_dispatch`) that upgrades all npm
   dependencies and devDependencies to their latest patch versions using `npx
-  npm-check-updates --target patch -u` and `npm update`. Runs `node scripts/sync-playwright-version.ts --from-package`
-  to sync `.playwright-version`, runs the full test suite (`typecheck`, `build`,
-  `test`, `e2e`), and opens a PR via `peter-evans/create-pull-request` if
-  updates are available and tests pass.
+  npm-check-updates --target patch -u` and `npm update`. Runs `npm run sync:playwright -- --from-package`
+  to sync `.playwright-version` and `npx playwright install chromium` to ensure browser binaries match the updated Playwright version, runs the full test suite (`sync check`, `typecheck`, `build`,
+  `test`, `e2e`), and opens/updates a PR via `gh` CLI if updates are available and tests pass.
 
 ### Repo settings (not in the tree — record here so they aren't rediscovered)
 
