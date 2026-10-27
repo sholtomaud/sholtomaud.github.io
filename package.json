@@ -26,6 +26,6 @@
     "@typescript/native-preview": "^7.0.0-dev.20260707.2",
     "playwright": "^1.63.0",
     "typescript": "^7.0.2",
-    "vite": "^8.1.4"
+    "vite": "^8.1.6"
   }
 }
